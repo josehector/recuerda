@@ -13,8 +13,22 @@ Add your content here.  Format your content with:
   * Automatic links to other wiki pages
 
 = Paginas de interes =
-https://groups.google.com/forum/#!topic/desarrolladores-android/rmrHzicimvw
+*Fragments*
+
+http://jarroba.com/fragments-fragmentos-en-android/
+
+http://jarroba.com/programar-fragments-fragmentos-en-android/
 
 http://javiexpo.wordpress.com/2013/06/07/expo-tutorial-como-usar-fragments-en-android/
 
+*ListViews*
+
+http://jarroba.com/listview-o-listado-en-android/
+
+https://groups.google.com/forum/#!topic/desarrolladores-android/rmrHzicimvw
+
 http://www.edumobile.org/android/android-development/image-gallery-example-in-android/
+
+*Audio Recorder*
+
+http://www.javaya.com.ar/androidya/detalleconcepto.php?codigo=158&inicio=20
