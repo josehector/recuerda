@@ -11,3 +11,10 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+= Paginas de interes =
+https://groups.google.com/forum/#!topic/desarrolladores-android/rmrHzicimvw
+
+http://javiexpo.wordpress.com/2013/06/07/expo-tutorial-como-usar-fragments-en-android/
+
+http://www.edumobile.org/android/android-development/image-gallery-example-in-android/
