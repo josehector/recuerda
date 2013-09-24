@@ -1,5 +1,8 @@
 package es.app.recuerda.entidades;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 
 /**
  * 
@@ -7,8 +10,17 @@ package es.app.recuerda.entidades;
  * Lo normal que sea con familiares.
  *
  */
+
+@DatabaseTable
 public class Relacion {
+	
+	public static final String ID = "_id";
+    public static final String NOMBRE = "nombre";
+	
+    @DatabaseField(generatedId = true, columnName = ID)
 	private int id;
+    
+    @DatabaseField(columnName = NOMBRE)
 	private String nombre;
 
 	public Relacion() {
