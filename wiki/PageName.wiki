@@ -38,3 +38,7 @@ http://www.javaya.com.ar/androidya/detalleconcepto.php?codigo=158&inicio=20
 http://www.maestrosdelweb.com/editorial/curso-android-trabajando-con-imagenes/
 
 http://danielme.com/tip-android-26-galeria-de-imagenes-con-el-widget-gridview/
+
+* Cargar ficheros desde SD*
+
+http://www.sgoliver.net/blog/?p=2035
