@@ -1,5 +1,8 @@
 package es.app.recuerda.entidades;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 
 /**
  * Clase principal que describe el recuerdo y la relación con éste.
@@ -8,10 +11,20 @@ package es.app.recuerda.entidades;
  *  guardarán en la SD.
  *
  */
-public class Recuerdo {
 
+@DatabaseTable
+public class Recuerdo {
+	public static final String ID = "_id";
+    public static final String NOMBRE = "nombre";
+    public static final String RELACION = "relacion";
+
+    @DatabaseField(generatedId = true, columnName = ID)
 	private int id;
+    
+    @DatabaseField(columnName = NOMBRE)
 	private String nombre;
+    
+    @DatabaseField(foreign = true, columnName = RELACION)
 	private Relacion relacion;
 	
 	public Recuerdo() {
