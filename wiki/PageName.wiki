@@ -32,3 +32,9 @@ http://www.edumobile.org/android/android-development/image-gallery-example-in-an
 *Audio Recorder*
 
 http://www.javaya.com.ar/androidya/detalleconcepto.php?codigo=158&inicio=20
+
+*Imagen*
+
+http://www.maestrosdelweb.com/editorial/curso-android-trabajando-con-imagenes/
+
+http://danielme.com/tip-android-26-galeria-de-imagenes-con-el-widget-gridview/
