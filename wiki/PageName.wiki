@@ -42,3 +42,5 @@ http://danielme.com/tip-android-26-galeria-de-imagenes-con-el-widget-gridview/
 * Cargar ficheros desde SD*
 
 http://www.sgoliver.net/blog/?p=2035
+
+http://androideity.com/2011/11/03/escribiendo-archivos-en-la-memoria-externa-sd-card/
