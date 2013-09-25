@@ -3,5 +3,10 @@
 
     <string name="app_name">recuerda</string>
     <string name="title_recuerdo_detail">Recuerdo Detail</string>
+    <string name="title_activity_asistente">Nuevo recuerdo</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="descrip_img_recuerdo">Boton para cargar la imagen del recuerdo</string>
+    <string name="txt_cargar_img">Por favor proporcione la imagen para el recuerdo.</string>
 
 </resources>
