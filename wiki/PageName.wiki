@@ -50,3 +50,7 @@ http://androideity.com/2011/11/03/escribiendo-archivos-en-la-memoria-externa-sd-
 http://androcode.es/2012/12/primeros-pasos-con-ormlite/
 
 http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top
+
+*ActionBar*
+
+http://www.sgoliver.net/blog/?p=3620
