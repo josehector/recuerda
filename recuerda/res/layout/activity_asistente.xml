@@ -10,8 +10,8 @@
 
     <LinearLayout
         android:id="@+id/llAsImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:orientation="vertical" >
@@ -27,11 +27,11 @@
             android:id="@+id/imgAsRecuerdo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/recuerdo_img" 
-            android:contentDescription="@string/descrip_img_recuerdo"/>
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/descrip_img_recuerdo"
+            android:scaleType="center"
+            android:src="@drawable/recuerdo_img" />
         
     </LinearLayout>
-
-    
 
 </RelativeLayout>
