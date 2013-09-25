@@ -37,6 +37,8 @@ http://www.javaya.com.ar/androidya/detalleconcepto.php?codigo=158&inicio=20
 
 http://javatechig.com/android/writing-image-picker-using-intent-in-android/
 
+http://www.tutorialandroid.com/basico/como-cambiar-de-tamano-una-imagen-bitmap/
+
 http://www.maestrosdelweb.com/editorial/curso-android-trabajando-con-imagenes/
 
 http://danielme.com/tip-android-26-galeria-de-imagenes-con-el-widget-gridview/
