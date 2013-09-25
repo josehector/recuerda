@@ -1,11 +1,17 @@
 package es.app.recuerda;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +32,9 @@ public class AsistenteActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intent =  new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-				startActivityForResult(intent, 0);
+				Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
 				
 			}
 		});
@@ -36,10 +43,34 @@ public class AsistenteActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (data.hasExtra("data")) {		    
-		    imgRecuerdo.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
-		}
+		if(resultCode == RESULT_OK){
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                int width = imgRecuerdo.getWidth();
+                int heigth = imgRecuerdo.getHeight();
+                imgRecuerdo.setImageBitmap(redimensionarImagenMaximo(selectedImage, width, heigth));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
 	}
+	
+	public Bitmap redimensionarImagenMaximo(Bitmap mBitmap, float newWidth, float newHeigth){
+		   //Redimensionamos
+		   int width = mBitmap.getWidth();
+		   int height = mBitmap.getHeight();
+		   float scaleWidth = ((float) newWidth) / width;
+		   float scaleHeight = ((float) newHeigth) / height;
+		   // create a matrix for the manipulation
+		   Matrix matrix = new Matrix();
+		   // resize the bit map
+		   matrix.postScale(scaleWidth, scaleHeight);
+		   // recreate the new Bitmap
+		   return Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, false);
+		}
 
 
 
