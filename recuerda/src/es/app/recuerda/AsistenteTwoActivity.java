@@ -5,14 +5,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.AndroidCharacter;
 import android.text.GetChars;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AsistenteTwoActivity extends Activity {	
 	
@@ -24,6 +27,7 @@ public class AsistenteTwoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente_two);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		builder = new AlertDialog.Builder(this);
 		builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
@@ -72,6 +76,20 @@ public class AsistenteTwoActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.asistente_two, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {	    
+	        case R.id.action_hecho:
+	            Log.i(TAG, "Siguiente!");	           
+	            return true;	   
+	        case android.R.id.home:
+	        	Log.i(TAG, "Volver!");
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 }
