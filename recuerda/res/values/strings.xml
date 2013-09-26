@@ -4,9 +4,20 @@
     <string name="app_name">recuerda</string>
     <string name="title_recuerdo_detail">Recuerdo Detail</string>
     <string name="title_activity_asistente">Nuevo recuerdo</string>
-    <string name="siguiente">Siguiente</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="action_siguiente">Siguiente</string>
+    <string name="action_hecho">Hecho</string>    
     <string name="descrip_img_recuerdo">Boton para cargar la imagen del recuerdo</string>
     <string name="txt_cargar_img">Por favor proporcione la imagen para el recuerdo.</string>
+    <string name="txt_selec_relacion">Por favor seleccione la relación</string>
+    <string name="lbl_nueva_relacion_nombre">Nombre</string>
+    
+    <string-array name="relaciones_array">
+        <item>Esposo</item>
+        <item>Esposa</item>
+        <item>Hijo</item>
+        <item>Hija</item>
+        <item>Nieto</item>
+        <item>Nieta</item>
+    </string-array>
 
 </resources>
