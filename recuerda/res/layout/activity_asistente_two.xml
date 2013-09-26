@@ -55,10 +55,35 @@
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/imgBtnGrabParar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/microphone2" />
+                android:src="@drawable/microphone2" 
+                android:onClick="grabarParar"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imgbtnPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Reproducir audio"
+                android:onClick="reproducir"
+                android:scaleType="fitCenter"
+                android:src="@drawable/btn_play_icon" />
+
+            <ProgressBar
+                android:id="@+id/pbAudio"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp" />
 
         </LinearLayout>
         
