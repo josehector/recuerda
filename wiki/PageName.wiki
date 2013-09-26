@@ -66,3 +66,7 @@ http://androcode.es/2012/12/trabajando-con-parcelables/
 *Dialog*
 
 http://developer.android.com/guide/topics/ui/dialogs.html
+
+*Spinner*
+
+http://danielme.com/2013/04/25/diseno-android-spinner/
