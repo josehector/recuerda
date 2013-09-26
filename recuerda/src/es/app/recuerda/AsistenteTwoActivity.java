@@ -1,5 +1,7 @@
 package es.app.recuerda;
 
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AsistenteTwoActivity extends Activity {	
+public class AsistenteTwoActivity extends Activity implements OnCompletionListener{	
 	
 	private static final String TAG = "AsistenteTwo";
 	
@@ -90,6 +92,12 @@ public class AsistenteTwoActivity extends Activity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
