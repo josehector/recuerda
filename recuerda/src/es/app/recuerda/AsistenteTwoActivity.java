@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.AndroidCharacter;
 import android.text.GetChars;
 import android.util.Log;
@@ -23,6 +25,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,7 +39,6 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	private MediaRecorder recorder;
     private MediaPlayer player;
     private File archivo;
-    private Button btnGrabarParar;
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
@@ -48,7 +51,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
 		
-		//btnGrabarParar = findViewById(R.id.imgBtnGrabParar);
+		Bundle extras = getIntent().getExtras();
+		byte[] b = extras.getByteArray("IMG_SELECTED");
+
+		Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+		Log.i(TAG, "Tamaño imagen: " + bmp.getByteCount());
+		ImageView image = (ImageView) findViewById(R.id.ivResImg);
+		image.setImageBitmap(bmp);
+		
 		builder = new AlertDialog.Builder(this);
 		builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
 			
@@ -68,8 +78,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 				
 			}
 		});
-		
-		Button btnNueva = (Button) findViewById(R.id.btnNuevaRelacion);
+				
+		ImageButton btnNueva = (ImageButton) findViewById(R.id.btnNuevaRelacion);
 		btnNueva.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -121,7 +131,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
         File path = new File(Environment.getExternalStorageDirectory()
                 .getPath());
         try {
-            archivo = File.createTempFile("temporal", ".3gp", path);
+            archivo = File.createTempFile("temporal", ".3gp", path);            
             Log.i(TAG, archivo.getPath());
         } catch (IOException e) {
         }
@@ -159,6 +169,10 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
         }  
         ImageButton btnGrabarParar = (ImageButton) v;
         btnGrabarParar.setImageDrawable(getResources().getDrawable(R.drawable.microphone2));
+        if (archivo != null) {
+        	LinearLayout llPlayAudio = (LinearLayout) findViewById(R.id.llAsPlayAudio);
+        	llPlayAudio.setVisibility(LinearLayout.VISIBLE);
+        }
     }
 
 	
@@ -196,9 +210,10 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
     }
 
 	@Override
-	public void onCompletion(MediaPlayer arg0) {
+	public void onCompletion(MediaPlayer player) {
 		// TODO Auto-generated method stub
 		Log.i(TAG, "Completado");
+		progressBar.setProgress(0);
 		
 	}
 

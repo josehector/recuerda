@@ -1,5 +1,6 @@
 package es.app.recuerda;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -25,6 +26,7 @@ public class AsistenteActivity extends Activity {
 
 	private ImageButton imgBtnRecuerdo;
 	private Drawable imgRecuerdo;
+	private Bitmap selectedImage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,9 @@ public class AsistenteActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == RESULT_OK){
             try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                Uri imageUri = data.getData();
+                InputStream imageStream = getContentResolver().openInputStream(imageUri);                
+                selectedImage = BitmapFactory.decodeStream(imageStream);
                 int width = imgBtnRecuerdo.getWidth();
                 int heigth = imgBtnRecuerdo.getHeight();
                 imgRecuerdo = new BitmapDrawable(getResources(), redimensionarImagenMaximo(selectedImage, width, heigth));
@@ -95,7 +97,11 @@ public class AsistenteActivity extends Activity {
 	            	Toast.makeText(this, "Debe seleccionar una imagen", Toast.LENGTH_SHORT).show();
 	            } else {
 	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);
-	            	//siguiente.putExtra("IMG_RECUERDO", imgRecuerdo);
+	            	//siguiente.putExtra("IMG_RECUERDO", imgRecuerdo);	     
+	            	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	            	selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos); 
+	            	byte[] b = baos.toByteArray();
+	            	siguiente.putExtra("IMG_SELECTED", b);
 	            	startActivity(siguiente);
 	            }
 	            return true;	        
