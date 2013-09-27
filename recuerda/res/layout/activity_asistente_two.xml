@@ -7,12 +7,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AsistenteTwoActivity" 
-    android:orientation="vertical" >    
+    android:orientation="vertical" 
+    android:weightSum="4">
 
     <LinearLayout
         android:id="@+id/llAsImg"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"     
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ivResImg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/ic_launcher" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llAsRel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"        
+        android:layout_height="0dp"
+        android:layout_weight="1"        
         android:orientation="vertical" >
         
         <TextView
@@ -21,24 +39,37 @@
         android:layout_height="wrap_content"              
         android:text="@string/txt_selec_relacion"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+            
+            <ImageButton
+            android:id="@+id/btnNuevaRelacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_relacion" 
+            android:contentDescription="@string/descrip_add_relacion"
+            android:background="@android:color/transparent"
+            />
 
         <Spinner
             android:id="@+id/spnRelacion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />               
+        
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btnNuevaRelacion"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nuevo"/>                
+                      
      </LinearLayout>
      
     <LinearLayout
         android:id="@+id/llAsAudio"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical" >
         
         <TextView
@@ -64,19 +95,22 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llAsPlayAudio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="invisible" >
 
             <ImageButton
                 android:id="@+id/imgbtnPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="Reproducir audio"
+                android:contentDescription="@string/descrip_img_play"
                 android:onClick="reproducir"
                 android:scaleType="fitCenter"
-                android:src="@drawable/btn_play_icon" />
+                android:src="@drawable/btn_play_icon" 
+                android:background="@android:color/transparent"/>
 
             <ProgressBar
                 android:id="@+id/pbAudio"
