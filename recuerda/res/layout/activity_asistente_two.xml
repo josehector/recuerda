@@ -90,7 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/microphone2" 
-                android:onClick="grabarParar"/>
+                android:onClick="grabarParar"
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 
