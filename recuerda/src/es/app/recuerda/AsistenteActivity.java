@@ -24,24 +24,23 @@ import android.widget.Toast;
 
 public class AsistenteActivity extends Activity {
 
-	private ImageButton imgBtnRecuerdo;
-	private Drawable imgRecuerdo;
+	private ImageButton imgBtnRecuerdo;	
 	private Bitmap selectedImage;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente);
-				
-		imgBtnRecuerdo = (ImageButton) findViewById(R.id.imgAsRecuerdo);
+		
+		imgBtnRecuerdo = (ImageButton) findViewById(R.id.imgAsRecuerdo);		
+		
 		imgBtnRecuerdo.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, 1);
-				
+                startActivityForResult(photoPickerIntent, 1);				
 			}
 		});
 	}
@@ -54,15 +53,17 @@ public class AsistenteActivity extends Activity {
                 Uri imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);                
                 selectedImage = BitmapFactory.decodeStream(imageStream);
-                int width = imgBtnRecuerdo.getWidth();
-                int heigth = imgBtnRecuerdo.getHeight();
-                imgRecuerdo = new BitmapDrawable(getResources(), redimensionarImagenMaximo(selectedImage, width, heigth));
-                imgBtnRecuerdo.setImageDrawable(imgRecuerdo);   
+                setImagen(imgBtnRecuerdo, selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
+	}
+	
+	private void setImagen(ImageButton imgButton, Bitmap bitmap) {
+		int width = imgButton.getWidth();
+        int heigth = imgButton.getHeight();
+        imgButton.setImageDrawable(new BitmapDrawable(getResources(), redimensionarImagenMaximo(bitmap, width, heigth)));
 	}
 	
 	public Bitmap redimensionarImagenMaximo(Bitmap mBitmap, float newWidth, float newHeigth){
@@ -93,7 +94,7 @@ public class AsistenteActivity extends Activity {
 	    switch (item.getItemId()) {
 	        case R.id.action_siguiente:
 	            Log.i("ActionBar", "Siguiente!");
-	            if (imgRecuerdo == null) {
+	            if (selectedImage == null) {
 	            	Toast.makeText(this, "Debe seleccionar una imagen", Toast.LENGTH_SHORT).show();
 	            } else {
 	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);

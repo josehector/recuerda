@@ -39,6 +39,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	private MediaRecorder recorder;
     private MediaPlayer player;
     private File archivo;
+    private Bitmap bmpSelected;
+    private byte[] byteSelected;
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
@@ -52,12 +54,12 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
 		
 		Bundle extras = getIntent().getExtras();
-		byte[] b = extras.getByteArray("IMG_SELECTED");
+		byteSelected = extras.getByteArray("IMG_SELECTED");
 
-		Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
-		Log.i(TAG, "Tamaño imagen: " + bmp.getByteCount());
+		bmpSelected = BitmapFactory.decodeByteArray(byteSelected, 0, byteSelected.length);
+		Log.i(TAG, "Tamaño imagen: " + bmpSelected.getByteCount());
 		ImageView image = (ImageView) findViewById(R.id.ivResImg);
-		image.setImageBitmap(bmp);
+		image.setImageBitmap(bmpSelected);
 		
 		builder = new AlertDialog.Builder(this);
 		builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
@@ -115,7 +117,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	            Log.i(TAG, "Siguiente!");	           
 	            return true;	   
 	        case android.R.id.home:
-	        	Log.i(TAG, "Volver!");
+	        	Log.i(TAG, "Volver!");	        	
+	        	finish();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
