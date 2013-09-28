@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import es.app.recuerda.dummy.DummyContent;
+import es.app.recuerda.entidades.Recuerdo;
 
 /**
  * A fragment representing a single Recuerdo detail screen. This fragment is
@@ -24,7 +25,7 @@ public class RecuerdoDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private Recuerdo mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -55,7 +56,7 @@ public class RecuerdoDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.recuerdo_detail))
-					.setText(mItem.content);
+					.setText(mItem.getNombre());
 		}
 
 		return rootView;
