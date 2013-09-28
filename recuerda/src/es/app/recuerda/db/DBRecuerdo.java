@@ -13,7 +13,7 @@ import com.j256.ormlite.table.TableUtils;
 import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.Relacion;
 
-public class DBHelper extends OrmLiteSqliteOpenHelper{
+public class DBRecuerdo extends OrmLiteSqliteOpenHelper{
 
 	private static final String DATABASE_NAME = "recuerdo.db";
     private static final int DATABASE_VERSION = 1;
@@ -21,7 +21,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
     private Dao<Recuerdo, Integer> recuerdoDao;
     private Dao<Relacion, Integer> relacionDao;
  
-    public DBHelper(Context context) {
+    public DBRecuerdo(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
  
