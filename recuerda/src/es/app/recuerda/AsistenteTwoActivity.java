@@ -3,6 +3,11 @@ package es.app.recuerda;
 import java.io.File;
 import java.io.IOException;
 
+import es.app.recuerda.db.ServicioRecuerdo;
+import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.entidades.Relacion;
+import es.app.recuerda.entidades.WraperRecuerdo;
+
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
@@ -36,11 +41,11 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	private static final String TAG = "AsistenteTwo";
 	
 	private AlertDialog.Builder builder;
+	private Spinner spnRelacion;
 	private MediaRecorder recorder;
     private MediaPlayer player;
     private File archivo;
     private Bitmap bmpSelected;
-    private byte[] byteSelected;
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
@@ -54,7 +59,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
 		
 		Bundle extras = getIntent().getExtras();
-		byteSelected = extras.getByteArray("IMG_SELECTED");
+		byte[] byteSelected = extras.getByteArray("IMG_SELECTED");
 
 		bmpSelected = BitmapFactory.decodeByteArray(byteSelected, 0, byteSelected.length);
 		Log.i(TAG, "Tamaño imagen: " + bmpSelected.getByteCount());
@@ -92,7 +97,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 			}
 		});
 		
-		Spinner spnRelacion = (Spinner) findViewById(R.id.spnRelacion);
+		spnRelacion = (Spinner) findViewById(R.id.spnRelacion);
 		
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -114,7 +119,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {	    
 	        case R.id.action_hecho:
-	            Log.i(TAG, "Siguiente!");	           
+	            Log.i(TAG, "Siguiente!");
+	            Relacion relacion = new Relacion(-1, spnRelacion.getSelectedItem().toString());
+	            Recuerdo recuerdo = new Recuerdo(-1, "ANTONIO", relacion);
+	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpSelected, archivo);
+	            ServicioRecuerdo servicio = new ServicioRecuerdo(this);
+	            servicio.guardar(wpRecuerdo);
+	            servicio.getRelacion(recuerdo.getRelacion().getId());
+	            servicio.cerrar();	            
 	            return true;	   
 	        case android.R.id.home:
 	        	Log.i(TAG, "Volver!");	        	
@@ -137,6 +149,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
             archivo = File.createTempFile("temporal", ".3gp", path);            
             Log.i(TAG, archivo.getPath());
         } catch (IOException e) {
+        	Log.e(TAG, e.getMessage());
         }
         recorder.setOutputFile(archivo.getAbsolutePath());
         try {

@@ -66,7 +66,7 @@ public class AsistenteActivity extends Activity {
         imgButton.setImageDrawable(new BitmapDrawable(getResources(), redimensionarImagenMaximo(bitmap, width, heigth)));
 	}
 	
-	public Bitmap redimensionarImagenMaximo(Bitmap mBitmap, float newWidth, float newHeigth){
+	private Bitmap redimensionarImagenMaximo(Bitmap mBitmap, float newWidth, float newHeigth){
 		   //Redimensionamos
 		   int width = mBitmap.getWidth();
 		   int height = mBitmap.getHeight();
@@ -97,8 +97,7 @@ public class AsistenteActivity extends Activity {
 	            if (selectedImage == null) {
 	            	Toast.makeText(this, "Debe seleccionar una imagen", Toast.LENGTH_SHORT).show();
 	            } else {
-	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);
-	            	//siguiente.putExtra("IMG_RECUERDO", imgRecuerdo);	     
+	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);  
 	            	ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	            	selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos); 
 	            	byte[] b = baos.toByteArray();
