@@ -146,7 +146,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
         File path = new File(Environment.getExternalStorageDirectory()
                 .getPath());
         try {
-            archivo = File.createTempFile("temporal", ".3gp", path);            
+            archivo = File.createTempFile("temporal", ".3gp", path);
+            archivo.deleteOnExit();
             Log.i(TAG, archivo.getPath());
         } catch (IOException e) {
         	Log.e(TAG, e.getMessage());
