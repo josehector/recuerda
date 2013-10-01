@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import com.j256.ormlite.dao.Dao;
 import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.Relacion;
 import es.app.recuerda.entidades.WraperRecuerdo;
+import es.app.recuerda.exception.BBDDException;
 import es.app.recuerda.util.Constantes;
 
 public class ServicioRecuerdo {
@@ -32,7 +34,32 @@ public class ServicioRecuerdo {
 		dbRecuerdo = OpenHelperManager.getHelper(context, DBRecuerdo.class);
 	}	
 	
-	public void guardar(WraperRecuerdo wpRecuerdo) {
+	public List<Relacion> getListaRelacion() {
+		List<Relacion> lista = null;
+		try {
+			Dao<Relacion, Integer> daoRelacion = dbRecuerdo
+			.getDao(Relacion.class);
+			lista = daoRelacion.queryForAll();
+		} catch (SQLException e) {
+			Log.e(TAG, e.getMessage());			
+		}
+		return lista;
+	}
+	
+	public void guardar(Relacion relacion) throws BBDDException{
+		try {
+			if (relacion.getId() == -1) {
+				Dao<Relacion, Integer> daoRelacion = dbRecuerdo
+						.getDao(Relacion.class);
+				daoRelacion.create(relacion);
+			}
+		} catch (SQLException e) {
+			Log.e(TAG, e.getMessage());
+			throw new BBDDException("Error al guardar la relacion");
+		}
+	}
+	
+	public void guardar(WraperRecuerdo wpRecuerdo) throws BBDDException{
 		Recuerdo recuerdo = wpRecuerdo.getRecuerdo();
 		Relacion relacion = recuerdo.getRelacion();
 		try {
@@ -52,10 +79,11 @@ public class ServicioRecuerdo {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.getMessage());
+			throw new BBDDException("Error al guardar WraperRecuerdo");
 		}
 	}
 	
-	public Relacion getRelacion(int idRelacion) {
+	/*public Relacion getRelacion(int idRelacion) throws BBDDException{
 		Relacion relacion = null;
 		try {
 			Dao<Relacion, Integer> daoRelacion = dbRecuerdo.getDao(Relacion.class);
@@ -63,9 +91,10 @@ public class ServicioRecuerdo {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.getMessage());
+			throw new BBDDException("Error al obtener la relacion: " + idRelacion);
 		}
 		return relacion;
-	}
+	}*/
 	
 	public void cerrar() {
 		if (dbRecuerdo != null) {
@@ -119,7 +148,6 @@ public class ServicioRecuerdo {
 	
 	private void prepare() {		
 		File sdIconStorageDir = new File(Constantes.RUTA_APP);
-
 		//create storage directories, if they don't exist
 		sdIconStorageDir.mkdirs();
 

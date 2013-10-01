@@ -10,6 +10,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import es.app.recuerda.R;
 import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.Relacion;
 
@@ -20,9 +21,11 @@ public class DBRecuerdo extends OrmLiteSqliteOpenHelper{
  
     private Dao<Recuerdo, Integer> recuerdoDao;
     private Dao<Relacion, Integer> relacionDao;
+    private String[] relaciones;
  
     public DBRecuerdo(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        relaciones = context.getResources().getStringArray(R.array.relaciones_array);
     }
  
     @Override
@@ -30,6 +33,10 @@ public class DBRecuerdo extends OrmLiteSqliteOpenHelper{
         try {
             TableUtils.createTable(connectionSource, Recuerdo.class);
             TableUtils.createTable(connectionSource, Relacion.class);
+            for(int i = 0; i<relaciones.length; i++) {
+            	getRelacionDao().create(new Relacion(i + 1, relaciones[i]));
+            }
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

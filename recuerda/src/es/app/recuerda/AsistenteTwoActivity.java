@@ -2,11 +2,14 @@ package es.app.recuerda;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.app.recuerda.db.ServicioRecuerdo;
 import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.Relacion;
 import es.app.recuerda.entidades.WraperRecuerdo;
+import es.app.recuerda.exception.BBDDException;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -29,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +53,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
+    private ServicioRecuerdo servicio;
+    private List<Relacion> listAdapter;
 
 	
 	@Override
@@ -57,6 +63,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		setContentView(R.layout.activity_asistente_two);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
+		
+		servicio = new ServicioRecuerdo(this);
 		
 		Bundle extras = getIntent().getExtras();
 		byte[] byteSelected = extras.getByteArray("IMG_SELECTED");
@@ -72,6 +80,19 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Log.i(TAG, "Guardar nueva relacion");
+				Relacion relacion = new Relacion();				
+				EditText etRelacion = (EditText) ((AlertDialog) dialog).findViewById(R.id.etNewRelacion);				
+				Log.i(TAG, "Nuevo nombre relacion: " + etRelacion.getText().toString());
+				relacion.setNombre(etRelacion.getText().toString());
+				try {
+					servicio.guardar(relacion);
+					listAdapter.add(relacion);
+					((ArrayAdapter<Relacion>)spnRelacion.getAdapter()).notifyDataSetChanged();
+					spnRelacion.setSelection(listAdapter.size()-1);
+				} catch (BBDDException e) {
+					Log.e(TAG, e.getMessage());
+					//TODO: indicar error al usuario
+				}
 				dialog.cancel();
 				
 			}
@@ -98,14 +119,23 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		});
 		
 		spnRelacion = (Spinner) findViewById(R.id.spnRelacion);
+		listAdapter = servicio.getListaRelacion();
+		if (listAdapter == null) {
+			listAdapter = new ArrayList<Relacion>();
+		}
+		
+		ArrayAdapter<Relacion> adapter2 = 
+			new ArrayAdapter<Relacion>(this, android.R.layout.simple_spinner_item, listAdapter);
 		
 		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.relaciones_array, android.R.layout.simple_spinner_item);
+		//ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		//        R.array.relaciones_array, android.R.layout.simple_spinner_item);
 		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
-		spnRelacion.setAdapter(adapter);
+		//spnRelacion.setAdapter(adapter);
+		spnRelacion.setAdapter(adapter2);
 	}
 
 	@Override
@@ -123,10 +153,15 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	            Relacion relacion = new Relacion(-1, spnRelacion.getSelectedItem().toString());
 	            Recuerdo recuerdo = new Recuerdo(-1, "ANTONIO", relacion);
 	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpSelected, archivo);
-	            ServicioRecuerdo servicio = new ServicioRecuerdo(this);
-	            servicio.guardar(wpRecuerdo);
-	            servicio.getRelacion(recuerdo.getRelacion().getId());
-	            servicio.cerrar();	            
+	            
+			try {
+				servicio.guardar(wpRecuerdo);
+			} catch (BBDDException e) {
+				Log.e(TAG, e.getMessage());
+				//TODO: indicar al usuario
+			} finally {
+				servicio.cerrar();
+			}	            	            
 	            return true;	   
 	        case android.R.id.home:
 	        	Log.i(TAG, "Volver!");	        	
@@ -233,5 +268,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		progressBar.setProgress(0);
 		
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		servicio.cerrar();
+	}
+	
+	
 
 }
