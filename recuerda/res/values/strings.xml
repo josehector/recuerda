@@ -14,8 +14,9 @@
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
     
+    
     <string-array name="relaciones_array">
-        <item>Esposo</item>
+        <item>Esposo</item>        
         <item>Esposa</item>
         <item>Hijo</item>
         <item>Hija</item>
