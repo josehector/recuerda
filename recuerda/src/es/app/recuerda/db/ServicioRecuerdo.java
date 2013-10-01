@@ -42,12 +42,13 @@ public class ServicioRecuerdo {
 			}
 			Dao<Recuerdo, Integer> daoRecuerdo = dbRecuerdo.getDao(Recuerdo.class);
 			int idRecuerdo = daoRecuerdo.create(recuerdo);
-			Log.i(TAG, "idRecuerdo: " + idRecuerdo);
-			storeImage(wpRecuerdo.getImagen(), Constantes.PREFIJO_IMG + idRecuerdo + Constantes.EXTENSION_IMG);	
+			Log.i(TAG, "idRecuerdo: " + recuerdo.getId());
+			storeImage(wpRecuerdo.getImagen(), Constantes.PREFIJO_IMG + recuerdo.getId() + Constantes.EXTENSION_IMG);	
 			if (wpRecuerdo.getAudio() != null) {
-				storeFile(wpRecuerdo.getAudio(), Constantes.PREFIJO_AUDIO + idRecuerdo
+				storeFile(wpRecuerdo.getAudio(), Constantes.PREFIJO_AUDIO + recuerdo.getId()
 						+ Constantes.EXTENSION_AUDIO);
 			}
+			Log.i(TAG, "Recuerdo guardado correctamente.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.getMessage());
