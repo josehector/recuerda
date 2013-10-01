@@ -66,6 +66,8 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		
 		servicio = new ServicioRecuerdo(this);
 		
+		List<WraperRecuerdo> lista = servicio.getListaRecuerdos();
+		
 		Bundle extras = getIntent().getExtras();
 		byte[] byteSelected = extras.getByteArray("IMG_SELECTED");
 
@@ -123,19 +125,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		if (listAdapter == null) {
 			listAdapter = new ArrayList<Relacion>();
 		}
-		
-		ArrayAdapter<Relacion> adapter2 = 
-			new ArrayAdapter<Relacion>(this, android.R.layout.simple_spinner_item, listAdapter);
-		
+			
 		// Create an ArrayAdapter using the string array and a default spinner layout
-		//ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		//        R.array.relaciones_array, android.R.layout.simple_spinner_item);
+		ArrayAdapter<Relacion> adapter = 
+			new ArrayAdapter<Relacion>(this, android.R.layout.simple_spinner_item, listAdapter);
 		// Specify the layout to use when the list of choices appears
-		//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
-		//spnRelacion.setAdapter(adapter);
-		spnRelacion.setAdapter(adapter2);
+		spnRelacion.setAdapter(adapter);
 	}
 
 	@Override
@@ -214,10 +211,12 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
         try {
             player.setDataSource(archivo.getAbsolutePath());
         } catch (IOException e) {
+        	Log.e(TAG, e.getMessage());
         }
         try {
             player.prepare();
         } catch (IOException e) {
+        	Log.e(TAG, e.getMessage());
         }  
         ImageButton btnGrabarParar = (ImageButton) v;
         btnGrabarParar.setImageDrawable(getResources().getDrawable(R.drawable.microphone2));
