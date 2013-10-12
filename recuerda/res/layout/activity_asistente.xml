@@ -46,8 +46,6 @@
             android:ems="10"
             android:hint="@string/hint_nombre_recuerdo"
             android:inputType="textPersonName" >
-
-            <requestFocus />
         </EditText>
         
     </LinearLayout>
