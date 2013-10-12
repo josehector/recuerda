@@ -13,6 +13,10 @@
     <string name="lbl_nueva_relacion_nombre">Nombre</string>
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
+    <string name="hint_nombre_recuerdo">Escribe el nombre...</string>
+    
+    <string name="msg_img_obligatorio">Debe seleccionar una imagen</string>
+    <string name="msg_nombre_obligatorio">Debe escribir un nombre</string>
     
     
     <string-array name="relaciones_array">
