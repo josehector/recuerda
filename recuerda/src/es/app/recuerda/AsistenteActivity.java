@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -26,12 +27,15 @@ public class AsistenteActivity extends Activity {
 
 	private ImageButton imgBtnRecuerdo;	
 	private Bitmap selectedImage;
+	private EditText etNombre;
+	private String nombreRecuerdo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente);
 		
+		etNombre = (EditText) findViewById(R.id.etAsNombre);
 		imgBtnRecuerdo = (ImageButton) findViewById(R.id.imgAsRecuerdo);		
 		
 		imgBtnRecuerdo.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +98,18 @@ public class AsistenteActivity extends Activity {
 	    switch (item.getItemId()) {
 	        case R.id.action_siguiente:
 	            Log.i("ActionBar", "Siguiente!");
+	            nombreRecuerdo = etNombre.getText().toString();
 	            if (selectedImage == null) {
-	            	Toast.makeText(this, "Debe seleccionar una imagen", Toast.LENGTH_SHORT).show();
-	            } else {
+	            	Toast.makeText(this, getResources().getText(R.string.msg_img_obligatorio), Toast.LENGTH_SHORT).show();
+	            } if (nombreRecuerdo == null || nombreRecuerdo.equals("")) { 
+	            	Toast.makeText(this, getResources().getText(R.string.msg_nombre_obligatorio), Toast.LENGTH_SHORT).show();
+	            }else {
 	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);  
 	            	ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	            	selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos); 
 	            	byte[] b = baos.toByteArray();
 	            	siguiente.putExtra("IMG_SELECTED", b);
+	            	siguiente.putExtra("NOMBRE_SELECTED", nombreRecuerdo);
 	            	startActivity(siguiente);
 	            }
 	            return true;	        

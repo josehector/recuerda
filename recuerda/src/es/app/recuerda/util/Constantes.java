@@ -9,5 +9,6 @@ public class Constantes {
 	public static final String EXTENSION_IMG = ".png";
 	public static final String PREFIJO_AUDIO = "recuerdoAud-";
 	public static final String EXTENSION_AUDIO = ".3gp";
+		
 
 }
