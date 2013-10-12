@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.entidades.Relacion;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -27,12 +28,18 @@ public class DummyContent {
 
 	static {
 		
-		addItem(new Recuerdo(1,"Item 1",null));
-		addItem(new Recuerdo(2,"Item 2",null));
-		addItem(new Recuerdo(3,"Item 3",null));
-		addItem(new Recuerdo(4,"Item 4",null));
-		addItem(new Recuerdo(5,"Item 5",null));
-		addItem(new Recuerdo(6,"Item 6",null));
+		Relacion relacion = new Relacion(1,"Primo");
+		
+		addItem(new Recuerdo(1,"Alberto Pedro Castillo López",relacion));
+		addItem(new Recuerdo(2,"Jose Hector López Benavente",relacion));
+		addItem(new Recuerdo(3,"Luis Tomas Brugarolas Fernandez",relacion));
+		addItem(new Recuerdo(4,"Item 4",relacion));
+		addItem(new Recuerdo(5,"Item 5",relacion));
+		addItem(new Recuerdo(6,"Item 6",relacion));
+		addItem(new Recuerdo(6,"Item 7",relacion));
+		addItem(new Recuerdo(6,"Item 8",relacion));
+		addItem(new Recuerdo(6,"Item 9",relacion));
+		addItem(new Recuerdo(6,"Item 10",relacion));
 		
 	}
 

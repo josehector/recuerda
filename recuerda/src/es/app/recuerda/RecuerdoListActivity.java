@@ -3,6 +3,7 @@ package es.app.recuerda;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Window;
 
 /**
  * An activity representing a list of Recuerdos. This activity has different
@@ -34,6 +35,7 @@ public class RecuerdoListActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recuerdo_list);
 
+		
 		if (findViewById(R.id.recuerdo_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ public class RecuerdoArrayAdatpter extends ArrayAdapter<Recuerdo> {
 		View rowView = inflater.inflate(R.layout.element_list, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.recuerdoNameLbl);
 		textView.setText(values.get(position).getNombre());
- 
+		
 		// Change icon based on name
 		String s = values.get(position).getNombre();
  
