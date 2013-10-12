@@ -50,6 +50,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
     private MediaPlayer player;
     private File archivo;
     private Bitmap bmpSelected;
+    private String nombreSelected;
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
@@ -69,6 +70,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		List<WraperRecuerdo> lista = servicio.getListaRecuerdos();
 		
 		Bundle extras = getIntent().getExtras();
+		nombreSelected = extras.getString("NOMBRE_SELECTED");
 		byte[] byteSelected = extras.getByteArray("IMG_SELECTED");
 
 		bmpSelected = BitmapFactory.decodeByteArray(byteSelected, 0, byteSelected.length);
@@ -148,7 +150,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	        case R.id.action_hecho:
 	            Log.i(TAG, "Siguiente!");
 	            Relacion relacion = new Relacion(-1, spnRelacion.getSelectedItem().toString());
-	            Recuerdo recuerdo = new Recuerdo(-1, "ANTONIO", relacion);
+	            Recuerdo recuerdo = new Recuerdo(-1, nombreSelected, relacion);
 	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpSelected, archivo);
 	            
 			try {
