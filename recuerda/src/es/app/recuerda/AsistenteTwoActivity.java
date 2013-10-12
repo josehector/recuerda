@@ -160,10 +160,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 				//TODO: indicar al usuario
 			} finally {
 				servicio.cerrar();
-			}	            	            
+			}	            
+				setResult(RESULT_OK);
+				Toast.makeText(this, getResources().getText(R.string.msg_recuerdo_guardado), Toast.LENGTH_SHORT).show();
+				finish();
 	            return true;	   
 	        case android.R.id.home:
-	        	Log.i(TAG, "Volver!");	        	
+	        	Log.i(TAG, "Volver!");	 
+	        	setResult(RESULT_CANCELED);
 	        	finish();
 	        	return true;
 	        default:

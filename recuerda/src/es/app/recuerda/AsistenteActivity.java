@@ -4,17 +4,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class AsistenteActivity extends Activity {
+	
+	private static final String TAG = "AsistenteActivity";
 
 	private ImageButton imgBtnRecuerdo;	
 	private Bitmap selectedImage;
@@ -34,8 +33,11 @@ public class AsistenteActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente);
-		
+		Log.i(TAG, "Iniciamos el asistente");
+		nombreRecuerdo = "";
 		etNombre = (EditText) findViewById(R.id.etAsNombre);
+		etNombre.setText("");
+		etNombre.setHint(getResources().getString(R.string.hint_nombre_recuerdo));
 		imgBtnRecuerdo = (ImageButton) findViewById(R.id.imgAsRecuerdo);		
 		
 		imgBtnRecuerdo.setOnClickListener(new View.OnClickListener() {
@@ -51,17 +53,26 @@ public class AsistenteActivity extends Activity {
 	
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK){
-            try {
-                Uri imageUri = data.getData();
-                InputStream imageStream = getContentResolver().openInputStream(imageUri);                
-                selectedImage = BitmapFactory.decodeStream(imageStream);
-                setImagen(imgBtnRecuerdo, selectedImage);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {		
+		if (requestCode == 2) {
+			if (resultCode == RESULT_OK) {
+				//Hemos guardado el recuerdo
+				Log.i(TAG, "Se ha guardado el recuerdo y cerramos el asistente");
+				this.recreate();	
+			}
+		} else {
+			if (resultCode == RESULT_OK) {
+				try {
+					Uri imageUri = data.getData();
+					InputStream imageStream = getContentResolver()
+							.openInputStream(imageUri);
+					selectedImage = BitmapFactory.decodeStream(imageStream);
+					setImagen(imgBtnRecuerdo, selectedImage);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	private void setImagen(ImageButton imgButton, Bitmap bitmap) {
@@ -97,7 +108,7 @@ public class AsistenteActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.action_siguiente:
-	            Log.i("ActionBar", "Siguiente!");
+	            Log.i(TAG, "Siguiente!");
 	            nombreRecuerdo = etNombre.getText().toString();
 	            if (selectedImage == null) {
 	            	Toast.makeText(this, getResources().getText(R.string.msg_img_obligatorio), Toast.LENGTH_SHORT).show();
@@ -110,12 +121,14 @@ public class AsistenteActivity extends Activity {
 	            	byte[] b = baos.toByteArray();
 	            	siguiente.putExtra("IMG_SELECTED", b);
 	            	siguiente.putExtra("NOMBRE_SELECTED", nombreRecuerdo);
-	            	startActivity(siguiente);
+	            	startActivityForResult(siguiente,2);
 	            }
 	            return true;	        
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	
 
 }
