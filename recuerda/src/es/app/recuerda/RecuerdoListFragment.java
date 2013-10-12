@@ -34,7 +34,6 @@ public class RecuerdoListFragment extends ListFragment {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setListAdapter(new RecuerdoArrayAdatpter(getActivity(), DummyContent.ITEMS));
-
     }
  
 

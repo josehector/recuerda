@@ -2,15 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    style="@style/fondoGeneral">
  
     <ListView
         android:id="@id/android:list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawSelectorOnTop="true" />
-
+        android:drawSelectorOnTop="true" 
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+	
+    <View
+        android:layout_width="5dip"
+        android:layout_height="fill_parent"
+        android:background="@drawable/drop_shadow" >
+    </View>
  
  
 </LinearLayout>

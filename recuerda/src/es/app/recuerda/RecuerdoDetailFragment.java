@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import es.app.recuerda.dummy.DummyContent;
@@ -55,8 +58,19 @@ public class RecuerdoDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.recuerdo_detail))
-					.setText(mItem.getNombre());
+			//TODO RELLENAR CONTENIDO VER ANIMACIONES
+			TextView nombreTxt = ((TextView) rootView.findViewById(R.id.recuerdo_nombre));
+			TextView relacionTxt = ((TextView) rootView.findViewById(R.id.recuerdo_relacion));
+			ImageView imgView = (ImageView) rootView.findViewById(R.id.imagen_recuerdo);
+			nombreTxt.setText(mItem.getNombre());
+			relacionTxt.setText(mItem.getRelacion().getNombre());
+			
+			Animation animacion = AnimationUtils.loadAnimation(getActivity(),R.anim.animacion);
+			Animation animacionFadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.transparencia);
+			
+			relacionTxt.startAnimation(animacion);
+			nombreTxt.startAnimation(animacion);
+			imgView.startAnimation(animacionFadeIn);
 		}
 
 		return rootView;
