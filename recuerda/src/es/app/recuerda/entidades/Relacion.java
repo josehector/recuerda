@@ -22,6 +22,7 @@ public class Relacion {
     
     @DatabaseField(columnName = NOMBRE)
 	private String nombre;
+    
 
 	public Relacion() {
 		this.id = -1;
