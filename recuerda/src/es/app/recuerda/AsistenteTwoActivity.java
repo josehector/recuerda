@@ -160,7 +160,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	    switch (item.getItemId()) {	    
 	        case R.id.action_hecho:
 	            Log.i(TAG, "Siguiente!");
-	            Relacion relacion = new Relacion(-1, spnRelacion.getSelectedItem().toString());
+	            Relacion relacion = (Relacion) spnRelacion.getSelectedItem();
 	            Recuerdo recuerdo = new Recuerdo(-1, nombreSelected, relacion);
 	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpSelected, archivo);
 	            
