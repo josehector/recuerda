@@ -1,9 +1,16 @@
 package es.app.recuerda;
 
+import java.io.ByteArrayOutputStream;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 /**
  * An activity representing a list of Recuerdos. This activity has different
@@ -24,6 +31,8 @@ import android.view.Window;
 public class RecuerdoListActivity extends FragmentActivity implements
 		RecuerdoListFragment.Callbacks {
 
+	private static final String TAG = "RecuerdoListActivity";
+	
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
@@ -32,6 +41,7 @@ public class RecuerdoListActivity extends FragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG, "Inicio Recuerda");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recuerdo_list);
 
@@ -78,4 +88,35 @@ public class RecuerdoListActivity extends FragmentActivity implements
 			startActivity(detailIntent);
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.recuerda, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.action_add:
+	            Log.i(TAG, "Nuevo recuerdo!");
+	            Intent asistente = new Intent(this, AsistenteActivity.class);
+	            startActivityForResult(asistente, 1);
+	            return true;	        
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			this.recreate();
+		}
+	}
+	
+	
+	
+	
 }
