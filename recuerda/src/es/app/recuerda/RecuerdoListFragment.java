@@ -1,16 +1,17 @@
 package es.app.recuerda;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import es.app.recuerda.dummy.DummyContent;
+import es.app.recuerda.db.ServicioRecuerdo;
+//import es.app.recuerda.dummy.DummyContent;
+import es.app.recuerda.entidades.WraperRecuerdo;
 
 /**
  * A list fragment representing a list of Recuerdos. This fragment also supports
@@ -22,6 +23,10 @@ import es.app.recuerda.dummy.DummyContent;
  * interface.
  */
 public class RecuerdoListFragment extends ListFragment {
+	
+	private ServicioRecuerdo servicio;
+	private List<WraperRecuerdo> listaRecuerdos;
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -33,7 +38,17 @@ public class RecuerdoListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), DummyContent.ITEMS));
+        RecuerdaApp recuerdaApp = (RecuerdaApp) getActivity().getApplication();
+        listaRecuerdos = recuerdaApp.getRecuerdos();
+        if (listaRecuerdos == null) {
+        	servicio = new ServicioRecuerdo(this.getActivity());
+            listaRecuerdos = servicio.getListaRecuerdos();
+            ((RecuerdaApp)getActivity().getApplicationContext()).setRecuerdos(listaRecuerdos);
+            servicio.cerrar();
+        }        
+        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), listaRecuerdos));
+        //setListAdapter(new RecuerdoArrayAdatpter(getActivity(), DummyContent.ITEMS));
+        
     }
  
 
@@ -123,7 +138,7 @@ public class RecuerdoListFragment extends ListFragment {
 		super.onListItemClick(listView, view, position, id);
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(String.valueOf(DummyContent.ITEMS.get(position).getId()));
+		mCallbacks.onItemSelected(String.valueOf(listaRecuerdos.get(position).getRecuerdo().getId()));
 	}
 
 	@Override

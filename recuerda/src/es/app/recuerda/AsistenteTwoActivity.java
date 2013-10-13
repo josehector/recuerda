@@ -1,7 +1,9 @@
 package es.app.recuerda;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import es.app.recuerda.exception.BBDDException;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -51,6 +54,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
     private File archivo;
     private Bitmap bmpSelected;
     private String nombreSelected;
+    private Uri imagenSelected;
     private ProgressBar progressBar;
     private Handler mHandler = new Handler();
     private int mProgressStatus = 0;
@@ -67,16 +71,23 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		
 		servicio = new ServicioRecuerdo(this);
 		
-		List<WraperRecuerdo> lista = servicio.getListaRecuerdos();
 		
 		Bundle extras = getIntent().getExtras();
 		nombreSelected = extras.getString("NOMBRE_SELECTED");
-		byte[] byteSelected = extras.getByteArray("IMG_SELECTED");
+		imagenSelected = extras.getParcelable("IMG_SELECTED");
 
-		bmpSelected = BitmapFactory.decodeByteArray(byteSelected, 0, byteSelected.length);
-		Log.i(TAG, "Tamaño imagen: " + bmpSelected.getByteCount());
-		ImageView image = (ImageView) findViewById(R.id.ivResImg);
-		image.setImageBitmap(bmpSelected);
+		InputStream imageStream = null;
+		try {
+			imageStream = getContentResolver().openInputStream(imagenSelected);
+			bmpSelected = BitmapFactory.decodeStream(imageStream);
+			
+			ImageView image = (ImageView) findViewById(R.id.ivResImg);
+			image.setImageBitmap(bmpSelected);
+		} catch (FileNotFoundException e) {
+			Log.e(TAG, e.toString());
+			//TODO: indicar error al usuario
+		}
+		
 		
 		builder = new AlertDialog.Builder(this);
 		builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
@@ -155,6 +166,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	            
 			try {
 				servicio.guardar(wpRecuerdo);
+				((RecuerdaApp)getApplication()).getRecuerdos().add(wpRecuerdo);
 			} catch (BBDDException e) {
 				Log.e(TAG, e.getMessage());
 				//TODO: indicar al usuario

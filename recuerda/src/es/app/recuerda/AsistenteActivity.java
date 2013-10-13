@@ -25,9 +25,10 @@ public class AsistenteActivity extends Activity {
 	private static final String TAG = "AsistenteActivity";
 
 	private ImageButton imgBtnRecuerdo;	
-	private Bitmap selectedImage;
+	//private Bitmap selectedImage;
 	private EditText etNombre;
 	private String nombreRecuerdo;
+	private Uri imagenRecuerdo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +58,21 @@ public class AsistenteActivity extends Activity {
 		if (requestCode == 2) {
 			if (resultCode == RESULT_OK) {
 				//Hemos guardado el recuerdo
-				Log.i(TAG, "Se ha guardado el recuerdo y cerramos el asistente");
-				this.recreate();	
+				Log.i(TAG, "Se ha guardado el recuerdo y cerramos el asistente");				
+				setResult(RESULT_OK);
+				finish();
 			}
-		} else {
+		} else {	//Recogemos la imagen seleccionada
 			if (resultCode == RESULT_OK) {
 				try {
-					Uri imageUri = data.getData();
+					imagenRecuerdo = data.getData();
+					Log.i(TAG, "Imagen seleccionada-> " + imagenRecuerdo.getPath());
 					InputStream imageStream = getContentResolver()
-							.openInputStream(imageUri);
-					selectedImage = BitmapFactory.decodeStream(imageStream);
+							.openInputStream(imagenRecuerdo);
+					Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 					setImagen(imgBtnRecuerdo, selectedImage);
 				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+					Log.e(TAG, e.toString());
 				}
 			}
 		}
@@ -110,16 +113,13 @@ public class AsistenteActivity extends Activity {
 	        case R.id.action_siguiente:
 	            Log.i(TAG, "Siguiente!");
 	            nombreRecuerdo = etNombre.getText().toString();
-	            if (selectedImage == null) {
+	            if (imagenRecuerdo == null) {
 	            	Toast.makeText(this, getResources().getText(R.string.msg_img_obligatorio), Toast.LENGTH_SHORT).show();
 	            } if (nombreRecuerdo == null || nombreRecuerdo.equals("")) { 
 	            	Toast.makeText(this, getResources().getText(R.string.msg_nombre_obligatorio), Toast.LENGTH_SHORT).show();
 	            }else {
-	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);  
-	            	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	            	selectedImage.compress(Bitmap.CompressFormat.PNG, 100, baos); 
-	            	byte[] b = baos.toByteArray();
-	            	siguiente.putExtra("IMG_SELECTED", b);
+	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);  	            	
+	            	siguiente.putExtra("IMG_SELECTED", imagenRecuerdo);
 	            	siguiente.putExtra("NOMBRE_SELECTED", nombreRecuerdo);
 	            	startActivityForResult(siguiente,2);
 	            }

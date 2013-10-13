@@ -2,21 +2,22 @@ package es.app.recuerda;
 
 import java.util.List;
 
-import es.app.recuerda.entidades.Recuerdo;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import es.app.recuerda.entidades.WraperRecuerdo;
 
-public class RecuerdoArrayAdatpter extends ArrayAdapter<Recuerdo> {
+public class RecuerdoArrayAdatpter extends ArrayAdapter<WraperRecuerdo> {
+	
+	private static final String TAG = "RecuerdoArrayAdapter";
 	private final Context context;
-	private final List<Recuerdo> values;
+	private final List<WraperRecuerdo> values;
  
-	public RecuerdoArrayAdatpter(Context context, List<Recuerdo> items) {
+	public RecuerdoArrayAdatpter(Context context, List<WraperRecuerdo> items) {
 		super(context, R.layout.element_list, items);
 		this.context = context;
 		this.values = items;
@@ -29,12 +30,12 @@ public class RecuerdoArrayAdatpter extends ArrayAdapter<Recuerdo> {
  
 		View rowView = inflater.inflate(R.layout.element_list, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.recuerdoNameLbl);
-		textView.setText(values.get(position).getNombre());
+		textView.setText(values.get(position).getRecuerdo().getNombre());
 		
 		// Change icon based on name
-		String s = values.get(position).getNombre();
+		String s = values.get(position).getRecuerdo().getNombre();
  
-		System.out.println(s);
+		Log.i(TAG, "getView -> " + s);
  
 		return rowView;
 	}

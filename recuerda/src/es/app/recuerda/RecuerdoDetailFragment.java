@@ -9,9 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import es.app.recuerda.dummy.DummyContent;
-import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.entidades.WraperRecuerdo;
 
 /**
  * A fragment representing a single Recuerdo detail screen. This fragment is
@@ -28,7 +26,7 @@ public class RecuerdoDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private Recuerdo mItem;
+	private WraperRecuerdo mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -45,7 +43,8 @@ public class RecuerdoDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
+			//mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+			mItem = ((RecuerdaApp)getActivity().getApplication()).getItem(getArguments().getString(
 					ARG_ITEM_ID));
 		}
 	}
@@ -62,8 +61,9 @@ public class RecuerdoDetailFragment extends Fragment {
 			TextView nombreTxt = ((TextView) rootView.findViewById(R.id.recuerdo_nombre));
 			TextView relacionTxt = ((TextView) rootView.findViewById(R.id.recuerdo_relacion));
 			ImageView imgView = (ImageView) rootView.findViewById(R.id.imagen_recuerdo);
-			nombreTxt.setText(mItem.getNombre());
-			relacionTxt.setText(mItem.getRelacion().getNombre());
+			nombreTxt.setText(mItem.getRecuerdo().getNombre());
+			relacionTxt.setText(mItem.getRecuerdo().getRelacion().getNombre());
+			imgView.setImageBitmap(mItem.getImagen());
 			
 			Animation animacion = AnimationUtils.loadAnimation(getActivity(),R.anim.animacion);
 			Animation animacionFadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.transparencia);
