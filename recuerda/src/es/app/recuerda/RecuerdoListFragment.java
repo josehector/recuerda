@@ -164,7 +164,7 @@ public class RecuerdoListFragment extends ListFragment {
 					final int indice = position;
 				
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setMessage("Esta seguro de borrar?");
+					builder.setMessage(R.string.msg_dialog_borrar_recuerdo);
 					builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				           public void onClick(DialogInterface dialog, int id) {
 				               // User clicked OK button

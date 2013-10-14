@@ -1,6 +1,5 @@
 package es.app.recuerda;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import es.app.recuerda.entidades.WraperRecuerdo;
