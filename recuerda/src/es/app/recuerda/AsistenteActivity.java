@@ -116,7 +116,7 @@ public class AsistenteActivity extends Activity {
 	            nombreRecuerdo = etNombre.getText().toString();
 	            if (imagenRecuerdo == null) {
 	            	Toast.makeText(this, getResources().getText(R.string.msg_img_obligatorio), Toast.LENGTH_SHORT).show();
-	            } if (nombreRecuerdo == null || nombreRecuerdo.equals("")) { 
+	            } else if (nombreRecuerdo == null || nombreRecuerdo.equals("")) { 
 	            	Toast.makeText(this, getResources().getText(R.string.msg_nombre_obligatorio), Toast.LENGTH_SHORT).show();
 	            }else {
 	            	Intent siguiente = new Intent(this, AsistenteTwoActivity.class);  	            	
