@@ -123,6 +123,25 @@ public class ServicioRecuerdo {
 			throw new BBDDException("Error al guardar WraperRecuerdo");
 		}
 	}
+	
+	public void borrar(WraperRecuerdo wraperRecuerdo) throws BBDDException {
+		Recuerdo recuerdo = wraperRecuerdo.getRecuerdo();
+		String pathImage = Constantes.PREFIJO_IMG
+				+ recuerdo.getId() + Constantes.EXTENSION_IMG;
+		String pathAudio =  Constantes.PREFIJO_AUDIO
+				+ recuerdo.getId() + Constantes.EXTENSION_AUDIO;
+		try {
+			Dao<Recuerdo, Integer> daoRecuerdo = dbRecuerdo.getDao(Recuerdo.class);
+			daoRecuerdo.delete(recuerdo);
+			boolean delImg = deleteFile(pathImage);
+			boolean delAud = deleteFile(pathAudio);
+			Log.i(TAG, "Imagen " + (delImg ? "borrada" : "NO borrada/existe"));
+			Log.i(TAG, "Audio " + (delAud ? "borrada" : "NO borrada/existe"));
+		} catch (SQLException e) {
+			Log.e(TAG, e.getMessage());
+			throw new BBDDException("Error al borrar WraperRecuerdo");
+		}		
+	}
 
 	public void cerrar() {
 		if (dbRecuerdo != null) {
@@ -206,6 +225,14 @@ public class ServicioRecuerdo {
 		}
 
 		return true;
+	}
+	
+	private boolean deleteFile(String filename) {
+		String filePath = Constantes.RUTA_APP + "/" + filename;
+		
+		File file = new File(filePath);
+		return file.delete();
+		
 	}
 
 }

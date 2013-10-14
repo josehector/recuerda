@@ -3,15 +3,22 @@ package es.app.recuerda;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.style.BulletSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import es.app.recuerda.db.ServicioRecuerdo;
 //import es.app.recuerda.dummy.DummyContent;
 import es.app.recuerda.entidades.WraperRecuerdo;
+import es.app.recuerda.exception.BBDDException;
 
 /**
  * A list fragment representing a list of Recuerdos. This fragment also supports
@@ -23,6 +30,7 @@ import es.app.recuerda.entidades.WraperRecuerdo;
  * interface.
  */
 public class RecuerdoListFragment extends ListFragment {
+	private static final String TAG = "RecuerdoListFragment";
 	
 	private ServicioRecuerdo servicio;
 	private List<WraperRecuerdo> listaRecuerdos;
@@ -46,7 +54,7 @@ public class RecuerdoListFragment extends ListFragment {
             ((RecuerdaApp)getActivity().getApplicationContext()).setRecuerdos(listaRecuerdos);
             servicio.cerrar();
         }        
-        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), listaRecuerdos));
+        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), listaRecuerdos));        
         //setListAdapter(new RecuerdoArrayAdatpter(getActivity(), DummyContent.ITEMS));
         
     }
@@ -139,6 +147,58 @@ public class RecuerdoListFragment extends ListFragment {
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 		mCallbacks.onItemSelected(String.valueOf(listaRecuerdos.get(position).getRecuerdo().getId()));
+	}
+	
+	
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+					
+					final int indice = position;
+				
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setMessage("Esta seguro de borrar?");
+					builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				               // User clicked OK button
+				        	   ServicioRecuerdo servicio = new ServicioRecuerdo(getActivity());
+								List<WraperRecuerdo> lista = ((RecuerdaApp)getActivity().getApplication()).getRecuerdos(); 
+								WraperRecuerdo wr = lista.get(indice);
+				        	   try {
+				        	   servicio.borrar(wr);
+				        	   Toast.makeText( getActivity().getBaseContext(),
+				        			   "Recuerdo " + wr.getRecuerdo().getNombre() + " borrado.",
+				        			   Toast.LENGTH_SHORT).show();
+				        	   Log.i(TAG, "Recuerdo " + wr.getRecuerdo().getNombre() + " borrado.");
+								lista.remove(indice);
+								setListAdapter(new RecuerdoArrayAdatpter(getActivity(), lista));
+								servicio.cerrar();
+								dialog.cancel();
+				        	   } catch (BBDDException e) {
+									Log.e(TAG, e.getMessage());
+									//TODO: indicar error al usuario					
+								}
+				           }
+				       });
+					builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				               // User cancelled the dialog
+				        	   dialog.cancel();
+				           }
+				       });
+					builder.show();
+
+				return true;
+				
+			}
+		});
 	}
 
 	@Override
