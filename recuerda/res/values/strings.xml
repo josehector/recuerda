@@ -19,6 +19,7 @@
     <string name="msg_img_obligatorio">Debe seleccionar una imagen</string>
     <string name="msg_nombre_obligatorio">Debe escribir un nombre</string>
     <string name="msg_recuerdo_guardado">Recuerdo guardado correctamente</string>
+    <string name="msg_dialog_borrar_recuerdo">¿Está seguro de borrar este recuerdo?</string>
     
     
     <string-array name="relaciones_array">
