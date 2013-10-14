@@ -70,6 +70,7 @@ public class AsistenteActivity extends Activity {
 					InputStream imageStream = getContentResolver()
 							.openInputStream(imagenRecuerdo);
 					Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+					Log.i(TAG, "Tamaño imagen seleccionada-> " + selectedImage.getByteCount());
 					setImagen(imgBtnRecuerdo, selectedImage);
 				} catch (FileNotFoundException e) {
 					Log.e(TAG, e.toString());
