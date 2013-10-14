@@ -7,12 +7,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.app.recuerda.db.ServicioRecuerdo;
-import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.entidades.Relacion;
-import es.app.recuerda.entidades.WraperRecuerdo;
-import es.app.recuerda.exception.BBDDException;
-
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
@@ -20,21 +19,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.text.AndroidCharacter;
-import android.text.GetChars;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,6 +31,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+import es.app.recuerda.db.ServicioRecuerdo;
+import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.entidades.Relacion;
+import es.app.recuerda.entidades.WraperRecuerdo;
+import es.app.recuerda.exception.BBDDException;
 
 public class AsistenteTwoActivity extends Activity implements OnCompletionListener{	
 	
