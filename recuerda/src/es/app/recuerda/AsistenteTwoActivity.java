@@ -170,9 +170,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 			} catch (BBDDException e) {
 				Log.e(TAG, e.getMessage());
 				//TODO: indicar al usuario
-			} finally {
-				servicio.cerrar();
-			}	            
+			}            
 				setResult(RESULT_OK);
 				Toast.makeText(this, getResources().getText(R.string.msg_recuerdo_guardado), Toast.LENGTH_SHORT).show();
 				finish();
