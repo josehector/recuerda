@@ -1,5 +1,6 @@
 package es.app.recuerda;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,6 +37,7 @@ import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.Relacion;
 import es.app.recuerda.entidades.WraperRecuerdo;
 import es.app.recuerda.exception.BBDDException;
+import es.app.recuerda.util.Util;
 
 public class AsistenteTwoActivity extends Activity implements OnCompletionListener{	
 	
@@ -54,8 +56,10 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
     private int mProgressStatus = 0;
     private ServicioRecuerdo servicio;
     private List<Relacion> listAdapter;
+    private ImageView image;
 
 	
+        
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,19 +73,9 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		Bundle extras = getIntent().getExtras();
 		nombreSelected = extras.getString("NOMBRE_SELECTED");
 		imagenSelected = extras.getParcelable("IMG_SELECTED");
-
-		InputStream imageStream = null;
-		try {
-			imageStream = getContentResolver().openInputStream(imagenSelected);
-			bmpSelected = BitmapFactory.decodeStream(imageStream);
-			
-			ImageView image = (ImageView) findViewById(R.id.ivResImg);
-			image.setImageBitmap(bmpSelected);
-		} catch (FileNotFoundException e) {
-			Log.e(TAG, e.toString());
-			//TODO: indicar error al usuario
-		}
 		
+		
+
 		
 		builder = new AlertDialog.Builder(this);
 		builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
@@ -141,6 +135,44 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 		// Apply the adapter to the spinner
 		spnRelacion.setAdapter(adapter);
 	}
+	
+	
+
+	@Override
+	 public void onWindowFocusChanged(boolean hasFocus) {
+		Log.i(TAG, "onWindowFocusChanged");
+		super.onWindowFocusChanged(hasFocus);
+	  //Here you can get the size!
+	 
+		image = (ImageView) findViewById(R.id.ivResImg);
+		Log.i(TAG, "Img:" + image.getWidth() + "x" + image.getHeight());
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		InputStream imageStream = null;
+		try {
+			imageStream = getContentResolver().openInputStream(imagenSelected);
+			
+			options.inJustDecodeBounds = true;
+			bmpSelected = BitmapFactory.decodeStream(imageStream, null, options);	
+			
+			options.inSampleSize = Util.calculateInSampleSize(options.outWidth, options.outHeight,
+					image.getWidth(), image.getHeight());
+	        Log.i(TAG, "inSampleSize: " + options.inSampleSize);
+			
+	        options.inJustDecodeBounds = false;
+	        imageStream = getContentResolver().openInputStream(imagenSelected);
+	        bmpSelected = BitmapFactory.decodeStream(imageStream, null, options);
+	        Log.i(TAG, "Longitud imagen reconstruida: " + bmpSelected.getWidth() + "x" + bmpSelected.getHeight());
+			Log.i(TAG, "Tamaño imagen reconstruida:" + bmpSelected.getByteCount());
+			
+			image.setImageBitmap(bmpSelected);
+		} catch (FileNotFoundException e) {
+			Log.e(TAG, e.toString());
+			//TODO: indicar error al usuario
+		}
+		
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,8 +188,14 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	            Log.i(TAG, "Siguiente!");
 	            Relacion relacion = (Relacion) spnRelacion.getSelectedItem();
 	            Recuerdo recuerdo = new Recuerdo(-1, nombreSelected, relacion);
-	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpSelected, archivo);
-	            
+	            Bitmap bmpOriginal = null;
+	            try {
+	            	InputStream imageStream = getContentResolver().openInputStream(imagenSelected);
+	            	bmpOriginal = BitmapFactory.decodeStream(imageStream);
+	            } catch (FileNotFoundException e1) {
+	            	Log.e(TAG, e1.getMessage());
+	            }
+	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpOriginal, archivo);	            
 			try {
 				servicio.guardar(wpRecuerdo);
 				((RecuerdaApp)getApplication()).getRecuerdos().add(wpRecuerdo);
@@ -166,7 +204,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 				//TODO: indicar al usuario
 			}            
 				setResult(RESULT_OK);
-				Toast.makeText(this, getResources().getText(R.string.msg_recuerdo_guardado), Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getResources().getText(R.string.msg_recuerdo_guardado), Toast.LENGTH_SHORT).show();				
 				finish();
 	            return true;	   
 	        case android.R.id.home:
