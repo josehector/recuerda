@@ -2,7 +2,10 @@ package es.app.recuerda;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+
+import es.app.recuerda.util.Util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -55,6 +58,7 @@ public class AsistenteActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {		
+		
 		if (requestCode == 2) {
 			if (resultCode == RESULT_OK) {
 				//Hemos guardado el recuerdo
@@ -64,14 +68,30 @@ public class AsistenteActivity extends Activity {
 			}
 		} else {	//Recogemos la imagen seleccionada
 			if (resultCode == RESULT_OK) {
+				BitmapFactory.Options options = new BitmapFactory.Options();
 				try {
 					imagenRecuerdo = data.getData();
 					Log.i(TAG, "Imagen seleccionada-> " + imagenRecuerdo.getPath());
-					InputStream imageStream = getContentResolver()
-							.openInputStream(imagenRecuerdo);
-					Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-					Log.i(TAG, "Tamaño imagen seleccionada-> " + selectedImage.getByteCount());
-					setImagen(imgBtnRecuerdo, selectedImage);
+					/*InputStream prueba = getContentResolver().openInputStream(imagenRecuerdo);
+					Bitmap mBitmapPrueba = BitmapFactory.decodeStream(prueba);
+					Log.i(TAG, "Tamaño original: " + mBitmapPrueba.getByteCount());*/					
+					
+					options.inJustDecodeBounds = true;
+					InputStream imageStream = getContentResolver().openInputStream(imagenRecuerdo);					
+					Bitmap mBitmap = BitmapFactory.decodeStream(imageStream, null, options);	
+					
+			 
+			        options.inSampleSize = Util.calculateInSampleSize(options.outWidth, options.outHeight,
+			        		 imgBtnRecuerdo.getWidth(), imgBtnRecuerdo.getHeight());
+			        Log.i(TAG, "inSampleSize: " + options.inSampleSize);
+			 
+			        options.inJustDecodeBounds = false;
+			        imageStream = getContentResolver().openInputStream(imagenRecuerdo);
+			        mBitmap = BitmapFactory.decodeStream(imageStream, null, options);
+			        Log.i(TAG, "Longitud imagen reconstruida: " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
+					Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());							
+			        imgBtnRecuerdo.setImageBitmap(mBitmap);
+			
 				} catch (FileNotFoundException e) {
 					Log.e(TAG, e.toString());
 				}
@@ -79,27 +99,6 @@ public class AsistenteActivity extends Activity {
 		}
 	}
 	
-	private void setImagen(ImageButton imgButton, Bitmap bitmap) {
-		int width = imgButton.getWidth();
-        int heigth = imgButton.getHeight();
-        imgButton.setImageDrawable(new BitmapDrawable(getResources(), redimensionarImagenMaximo(bitmap, width, heigth)));
-	}
-	
-	private Bitmap redimensionarImagenMaximo(Bitmap mBitmap, float newWidth, float newHeigth){
-		   //Redimensionamos
-		   int width = mBitmap.getWidth();
-		   int height = mBitmap.getHeight();
-		   float scaleWidth = ((float) newWidth) / width;
-		   float scaleHeight = ((float) newHeigth) / height;
-		   // create a matrix for the manipulation
-		   Matrix matrix = new Matrix();
-		   // resize the bit map
-		   matrix.postScale(scaleWidth, scaleHeight);
-		   // recreate the new Bitmap
-		   return Bitmap.createBitmap(mBitmap, 0, 0, width, height, matrix, false);
-		}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
