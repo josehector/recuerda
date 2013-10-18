@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import es.app.recuerda.db.ServicioRecuerdo;
 //import es.app.recuerda.dummy.DummyContent;
+import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.WraperRecuerdo;
 import es.app.recuerda.exception.BBDDException;
 
@@ -33,7 +34,7 @@ public class RecuerdoListFragment extends ListFragment {
 	private static final String TAG = "RecuerdoListFragment";
 	
 	private ServicioRecuerdo servicio;
-	private List<WraperRecuerdo> listaRecuerdos;
+	private List<Recuerdo> listaRecuerdos;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,7 +147,7 @@ public class RecuerdoListFragment extends ListFragment {
 		super.onListItemClick(listView, view, position, id);
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(String.valueOf(listaRecuerdos.get(position).getRecuerdo().getId()));
+		mCallbacks.onItemSelected(String.valueOf(listaRecuerdos.get(position).getId()));
 	}
 	
 	
@@ -169,14 +170,14 @@ public class RecuerdoListFragment extends ListFragment {
 				           public void onClick(DialogInterface dialog, int id) {
 				               // User clicked OK button
 				        	   ServicioRecuerdo servicio = new ServicioRecuerdo(getActivity());
-								List<WraperRecuerdo> lista = ((RecuerdaApp)getActivity().getApplication()).getRecuerdos(); 
-								WraperRecuerdo wr = lista.get(indice);
+								List<Recuerdo> lista = ((RecuerdaApp)getActivity().getApplication()).getRecuerdos(); 
+								Recuerdo recuerda = lista.get(indice);
 				        	   try {
-				        	   servicio.borrar(wr);
+				        	   servicio.borrar(recuerda);
 				        	   Toast.makeText( getActivity().getBaseContext(),
-				        			   "Recuerdo " + wr.getRecuerdo().getNombre() + " borrado.",
+				        			   "Recuerdo " + recuerda.getNombre() + " borrado.",
 				        			   Toast.LENGTH_SHORT).show();
-				        	   Log.i(TAG, "Recuerdo " + wr.getRecuerdo().getNombre() + " borrado.");
+				        	   Log.i(TAG, "Recuerdo " + recuerda.getNombre() + " borrado.");
 								lista.remove(indice);
 								setListAdapter(new RecuerdoArrayAdatpter(getActivity(), lista));
 								servicio.cerrar();
