@@ -36,40 +36,19 @@ public class ServicioRecuerdo {
 		dbRecuerdo = OpenHelperManager.getHelper(context, DBRecuerdo.class);
 	}
 
-	public List<WraperRecuerdo> getListaRecuerdos() {
-		List<WraperRecuerdo> listaRecuerdos = null;
+	public List<Recuerdo> getListaRecuerdos() {
+		List<Recuerdo> lista = null;
 		try {
 			Dao<Recuerdo, Integer> daoRecuerdo = dbRecuerdo
 					.getDao(Recuerdo.class);
-			List<Recuerdo> lista = daoRecuerdo.queryForAll();
-			listaRecuerdos = new ArrayList<WraperRecuerdo>();
-			for (Recuerdo recuerdo : lista) {
-				String pathImg = Constantes.RUTA_APP + "/"
-						+ Constantes.PREFIJO_IMG + recuerdo.getId()
-						+ Constantes.EXTENSION_IMG;
-				Bitmap imagen = null;
-				try {
-					FileInputStream fileImg = new FileInputStream(pathImg);
-					imagen = BitmapFactory.decodeStream(fileImg, null, null);
-				} catch (FileNotFoundException e) {
-					Log.e(TAG, "No se ha encontrado la imagen asociada al recuerdo");
-				}
-				String pathAudio = Constantes.RUTA_APP + "/"
-				+ Constantes.PREFIJO_AUDIO + recuerdo.getId()
-				+ Constantes.EXTENSION_AUDIO;
+			lista = daoRecuerdo.queryForAll();
+			/*FileInputStream fileImg = new FileInputStream(pathImg);
+			imagen = BitmapFactory.decodeStream(fileImg, null, null);*/
 				
-				File fileAudio = new File(pathAudio);
-				if(!fileAudio.exists()) {
-					Log.i(TAG, "No existe audio asociado al recuerdo");
-					fileAudio = null;
-				}				
-				WraperRecuerdo wRecuerdo = new WraperRecuerdo(recuerdo, imagen, fileAudio);
-				listaRecuerdos.add(wRecuerdo);
-			}
 		} catch (SQLException e) {
 			Log.e(TAG, "Error al recuperar los recuerdos");
 		}
-		return listaRecuerdos;
+		return lista;
 	}
 
 	public List<Relacion> getListaRelacion() {
@@ -124,8 +103,8 @@ public class ServicioRecuerdo {
 		}
 	}
 	
-	public void borrar(WraperRecuerdo wraperRecuerdo) throws BBDDException {
-		Recuerdo recuerdo = wraperRecuerdo.getRecuerdo();
+	public void borrar(Recuerdo recuerdo) throws BBDDException {
+		
 		String pathImage = Constantes.PREFIJO_IMG
 				+ recuerdo.getId() + Constantes.EXTENSION_IMG;
 		String pathAudio =  Constantes.PREFIJO_AUDIO

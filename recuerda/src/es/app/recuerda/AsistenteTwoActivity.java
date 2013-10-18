@@ -198,7 +198,7 @@ public class AsistenteTwoActivity extends Activity implements OnCompletionListen
 	            WraperRecuerdo wpRecuerdo = new WraperRecuerdo(recuerdo, bmpOriginal, archivo);	            
 			try {
 				servicio.guardar(wpRecuerdo);
-				((RecuerdaApp)getApplication()).getRecuerdos().add(wpRecuerdo);
+				((RecuerdaApp)getApplication()).getRecuerdos().add(recuerdo);
 			} catch (BBDDException e) {
 				Log.e(TAG, e.getMessage());
 				//TODO: indicar al usuario

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 /**
@@ -17,6 +18,8 @@ import android.view.MenuItem;
  */
 public class RecuerdoDetailActivity extends FragmentActivity {
 
+	private static final String TAG = "RecuerdoDetailActivity";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,4 +67,6 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 }

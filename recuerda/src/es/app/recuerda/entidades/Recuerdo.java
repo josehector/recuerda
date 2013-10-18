@@ -3,6 +3,8 @@ package es.app.recuerda.entidades;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import es.app.recuerda.util.Constantes;
+
 
 /**
  * Clase principal que describe el recuerdo y la relación con éste.
@@ -61,6 +63,20 @@ public class Recuerdo {
 
 	public void setRelacion(Relacion relacion) {
 		this.relacion = relacion;
+	}
+	
+	public String getPathImg() {
+		String pathImg = Constantes.RUTA_APP + "/"
+		+ Constantes.PREFIJO_IMG + getId()
+		+ Constantes.EXTENSION_IMG;
+		return pathImg;
+	}
+	
+	public String getPathAudio() {
+		String pathAudio = Constantes.RUTA_APP + "/"
+		+ Constantes.PREFIJO_AUDIO + getId()
+		+ Constantes.EXTENSION_AUDIO;
+		return pathAudio;
 	}
 
 }

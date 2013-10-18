@@ -2,30 +2,31 @@ package es.app.recuerda;
 
 import java.util.List;
 
+import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.entidades.WraperRecuerdo;
 
 import android.app.Application;
 
 public class RecuerdaApp extends Application {
-	private List<WraperRecuerdo> recuerdos;
+	private List<Recuerdo> recuerdos;
 	
 	public RecuerdaApp() {
 		recuerdos = null;
 	}
 
-	public List<WraperRecuerdo> getRecuerdos() {
+	public List<Recuerdo> getRecuerdos() {
 		return recuerdos;
 	}
 
-	public void setRecuerdos(List<WraperRecuerdo> recuerdos) {
+	public void setRecuerdos(List<Recuerdo> recuerdos) {
 		this.recuerdos = recuerdos;
 	}
 	
-	public WraperRecuerdo getItem(String id) {
+	public Recuerdo getItem(String id) {
 		if (getRecuerdos() != null) {
-			for (WraperRecuerdo wr : getRecuerdos()) {
-				if (String.valueOf(wr.getRecuerdo().getId()).equals(id)) {
-					return wr;
+			for (Recuerdo recuerdo : getRecuerdos()) {
+				if (String.valueOf(recuerdo.getId()).equals(id)) {
+					return recuerdo;
 				}
 			}
 		}
