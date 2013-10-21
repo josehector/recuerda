@@ -20,6 +20,8 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 
 	private static final String TAG = "RecuerdoDetailActivity";
 	
+	private RecuerdoDetailFragment fragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,8 +45,8 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 			Bundle arguments = new Bundle();
 			arguments.putString(RecuerdoDetailFragment.ARG_ITEM_ID, getIntent()
 					.getStringExtra(RecuerdoDetailFragment.ARG_ITEM_ID));
-			RecuerdoDetailFragment fragment = new RecuerdoDetailFragment();
-			fragment.setArguments(arguments);
+			fragment = new RecuerdoDetailFragment();
+			fragment.setArguments(arguments);			
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.recuerdo_detail_container, fragment).commit();
 		}
@@ -61,12 +63,15 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
+			if (fragment.getPlayer() != null) {
+				fragment.getPlayer().stop();
+			}
+			
 			NavUtils.navigateUpTo(this, new Intent(this,
 					RecuerdoListActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
 	
 }

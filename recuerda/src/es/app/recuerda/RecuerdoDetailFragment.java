@@ -2,10 +2,14 @@ package es.app.recuerda;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,7 +30,7 @@ import es.app.recuerda.util.Util;
  * either contained in a {@link RecuerdoListActivity} in two-pane mode (on
  * tablets) or a {@link RecuerdoDetailActivity} on handsets.
  */
-public class RecuerdoDetailFragment extends Fragment {
+public class RecuerdoDetailFragment extends Fragment implements OnCompletionListener{
 	
 	private static final String TAG = "RecuerdoDetailFragment";
 	/**
@@ -40,6 +44,9 @@ public class RecuerdoDetailFragment extends Fragment {
 	 */
 	private Recuerdo mItem;
 	private ImageView imgView;
+	private MediaPlayer player;
+	
+	private RecuerdoDetailFragment fragment;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +66,7 @@ public class RecuerdoDetailFragment extends Fragment {
 			//mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 			mItem = ((RecuerdaApp)getActivity().getApplication()).getItem(getArguments().getString(
 					ARG_ITEM_ID));
+			fragment = this;
 		}
 	}
 
@@ -104,38 +112,48 @@ public class RecuerdoDetailFragment extends Fragment {
 						Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());										        
 						imgView.setImageBitmap(mBitmap);
 						Animation animacionFadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.transparencia);
-						imgView.startAnimation(animacionFadeIn);
+						imgView.startAnimation(animacionFadeIn);							
 					} catch (FileNotFoundException e) {
 						Log.e(TAG, e.getMessage());
 						//TODO: indicar error
-					}			        			        
+					}
+					if (Util.existeFichero(mItem.getPathAudio())) {
+						player = new MediaPlayer();
+						player.setOnCompletionListener(fragment);
+						try {
+							player.setDataSource(mItem.getPathAudio());			
+							player.prepare();	
+							Log.i(TAG, "Iniciamos el audio");
+							player.start();
+						} catch (IOException e) {
+							Log.e(TAG, "No se ha podido reproducir el audio asociado al recuerdo " + mItem.getId());
+							Log.e(TAG, e.getMessage());
+						}
+					}
 			        imgView.getViewTreeObserver().removeOnPreDrawListener(this);
 			        return true;
 			    }
 			});
 			
 			Animation animacion = AnimationUtils.loadAnimation(getActivity(),R.anim.animacion);
-			//Animation animacionFadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.transparencia);
 			
 			relacionTxt.startAnimation(animacion);
 			nombreTxt.startAnimation(animacion);
-			//imgView.startAnimation(animacionFadeIn);
+			
 		}
 
 		return rootView;
 	}
+	
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onViewCreated(view, savedInstanceState);
-		Log.i(TAG, "img:" + imgView.getWidth());
-		Log.i(TAG, "img2:" + view.getWidth());
+	public void onCompletion(MediaPlayer mp) {
+		Log.i(TAG, "El audio ha terminado de reproducirse");
+		
 	}
-
 	
-	
-	
-	
+	public MediaPlayer getPlayer() {
+		return player;
+	}
 	
 }

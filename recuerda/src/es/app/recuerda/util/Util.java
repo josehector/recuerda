@@ -1,5 +1,7 @@
 package es.app.recuerda.util;
 
+import java.io.File;
+
 import android.util.Log;
 
 /**
@@ -33,6 +35,13 @@ public class Util {
 
 		return inSampleSize;
 	}	
+	
+	public static boolean existeFichero(String path) {
+		File file = new File(path);
+		boolean existe = file.exists();
+		Log.i(TAG, "Comprobamos si el fichero " + path + " existe...." + (existe ? "SI" : "NO"));
+		return existe;
+	}
 
 
 }
