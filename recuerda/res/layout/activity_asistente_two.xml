@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="invisible" >
+            android:visibility="visible" >
 
             <ImageButton
                 android:id="@+id/imgbtnPlay"
@@ -114,7 +114,8 @@
                 android:onClick="reproducir"
                 android:scaleType="fitCenter"
                 android:src="@drawable/btn_play_icon" 
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:visibility="visible"/>             
 
             <ProgressBar
                 android:id="@+id/pbAudio"
@@ -122,6 +123,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="200dp" />
+            
+            <ImageButton
+                android:id="@+id/imgbtnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/descrip_img_del"
+                android:onClick="borrar"
+                android:scaleType="fitCenter"
+                android:src="@drawable/btn_del_icon" 
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
         
