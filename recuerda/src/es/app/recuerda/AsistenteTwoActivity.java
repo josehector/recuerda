@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,12 +62,15 @@ public class AsistenteTwoActivity extends Activity implements
 	private List<Relacion> listAdapter;
 	private ImageView image;
 	private ProgressDialog guardando;
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente_two);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		context = this;
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
 
 		servicio = new ServicioRecuerdo(this);
@@ -197,28 +201,8 @@ public class AsistenteTwoActivity extends Activity implements
 		switch (item.getItemId()) {
 		case R.id.action_hecho:
 			Log.i(TAG, "Guardar!");
-			guardando.show();
 			TaskGuardarRecuerdo guardar = new TaskGuardarRecuerdo();
-			guardar.execute();
-			Recuerdo recuerdo = null;
-			try {
-				recuerdo = guardar.get();
-			} catch (Exception e) {
-				Log.e(TAG, e.getMessage());
-				// TODO: indicar error
-			}
-
-			if (recuerdo != null) {
-				((RecuerdaApp) getApplication()).getRecuerdos().add(recuerdo);
-				setResult(RESULT_OK);
-				Toast.makeText(this,
-						getResources().getText(R.string.msg_recuerdo_guardado),
-						Toast.LENGTH_SHORT).show();
-				finish();
-			} else {
-				//TODO:Indicar error
-			}
-			
+			guardar.execute();					
 			return true;
 		case android.R.id.home:
 			Log.i(TAG, "Volver!");
@@ -235,8 +219,7 @@ public class AsistenteTwoActivity extends Activity implements
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
-			//super.onPreExecute();
-			//guardando.show();
+			guardando.show();
 
 		}
 
@@ -266,8 +249,17 @@ public class AsistenteTwoActivity extends Activity implements
 		@Override
 		protected void onPostExecute(Recuerdo result) {
 			// TODO Auto-generated method stub
-			//super.onPostExecute(result);
-			guardando.cancel();
+			guardando.dismiss();
+			if (result != null) {
+				((RecuerdaApp) getApplication()).getRecuerdos().add(result);
+				setResult(RESULT_OK);
+				Toast.makeText(context,
+						getResources().getText(R.string.msg_recuerdo_guardado),
+						Toast.LENGTH_SHORT).show();
+				finish();
+			} else {
+				//TODO:Indicar error
+			}
 		}
 
 	}
