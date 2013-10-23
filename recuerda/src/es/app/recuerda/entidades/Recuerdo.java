@@ -26,7 +26,7 @@ public class Recuerdo {
     @DatabaseField(columnName = NOMBRE)
 	private String nombre;
     
-    @DatabaseField(foreign = true, columnName = RELACION, canBeNull=false)
+    @DatabaseField(foreign = true, columnName = RELACION, canBeNull=false, foreignAutoRefresh=true)
 	private Relacion relacion;
 	
 	public Recuerdo() {
