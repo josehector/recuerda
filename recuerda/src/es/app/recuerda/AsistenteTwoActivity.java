@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -299,6 +300,7 @@ public class AsistenteTwoActivity extends Activity implements
 			}
 		});
 	}
+		
 
 	public void detener(View v) {
 		recorder.stop();
@@ -319,8 +321,7 @@ public class AsistenteTwoActivity extends Activity implements
 		btnGrabarParar.setImageDrawable(getResources().getDrawable(
 				R.drawable.microphone2));
 		if (archivo != null) {
-			LinearLayout llPlayAudio = (LinearLayout) findViewById(R.id.llAsPlayAudio);
-			llPlayAudio.setVisibility(LinearLayout.VISIBLE);
+			ocultarPanelAudio(false);			
 		}
 	}
 
@@ -353,6 +354,20 @@ public class AsistenteTwoActivity extends Activity implements
 			}
 		}).start();
 
+	}
+	
+	public void borrar(View v) {
+		Log.i(TAG, "Borrar audio");
+		if (archivo != null) {
+			archivo.delete();
+			archivo = null;
+		}
+		ocultarPanelAudio(true);		
+	}
+	
+	private void ocultarPanelAudio(boolean valor) {
+		LinearLayout llPlayAudio = (LinearLayout) findViewById(R.id.llAsPlayAudio);
+		llPlayAudio.setVisibility((valor ? LinearLayout.INVISIBLE : LinearLayout.VISIBLE));
 	}
 
 	@Override
