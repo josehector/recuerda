@@ -63,7 +63,7 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			if (fragment.getPlayer() != null) {
+			if (fragment != null && fragment.getPlayer() != null) {
 				fragment.getPlayer().stop();
 			}
 			
