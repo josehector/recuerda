@@ -64,6 +64,7 @@ public class AsistenteTwoActivity extends Activity implements
 	private ImageView image;
 	private ProgressDialog guardando;
 	private Context context;
+	private boolean grabar = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -266,64 +267,63 @@ public class AsistenteTwoActivity extends Activity implements
 	}
 
 	public void grabarParar(View v) {
-		Log.i(TAG, "Iniciamos la grabacion");
-		recorder = new MediaRecorder();
-		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		File path = new File(Environment.getExternalStorageDirectory()
-				.getPath());
-		try {
-			archivo = File.createTempFile("temporal", ".3gp", path);
-			archivo.deleteOnExit();
-			// TODO: borrar a mano porque no lo hace solo
-			Log.i(TAG, archivo.getPath());
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());
-		}
-		recorder.setOutputFile(archivo.getAbsolutePath());
-		try {
-			recorder.prepare();
-		} catch (IOException e) {
-		}
-		recorder.start();
-		ImageButton btnGrabarParar = (ImageButton) v;
-		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.player_stop));
-		btnGrabarParar.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Log.i(TAG, "Paramos la grabación");
-				detener(v);
-
+		if (grabar) {
+			Log.i(TAG, "Iniciamos la grabacion");
+			if (archivo != null) {
+				//TODO: habría que indicar que el audio anterior va a ser borrado
+				archivo.delete();				
 			}
-		});
+			ocultarPanelAudio(true);			
+			recorder = new MediaRecorder();
+			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			File path = new File(Environment.getExternalStorageDirectory()
+					.getPath());
+			try {
+				archivo = File.createTempFile("temporal", ".3gp", path);
+				archivo.deleteOnExit();
+				Log.i(TAG, archivo.getPath());
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+			}
+			recorder.setOutputFile(archivo.getAbsolutePath());
+			try {
+				recorder.prepare();
+			} catch (IOException e) {
+			}
+			recorder.start();
+			ImageButton btnGrabarParar = (ImageButton) v;
+			btnGrabarParar.setImageDrawable(getResources().getDrawable(
+					R.drawable.player_stop));
+			grabar = false;
+		} else {
+			Log.i(TAG, "Paramos la grabación");
+			recorder.stop();
+			recorder.release();
+			player = new MediaPlayer();
+			player.setOnCompletionListener(this);
+			try {
+				player.setDataSource(archivo.getAbsolutePath());
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+			}
+			try {
+				player.prepare();
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+			}
+			ImageButton btnGrabarParar = (ImageButton) v;
+			btnGrabarParar.setImageDrawable(getResources().getDrawable(
+					R.drawable.microphone2));
+			if (archivo != null) {
+				ocultarPanelAudio(false);			
+			}
+			grabar = true;
+		}
 	}
 		
-
-	public void detener(View v) {
-		recorder.stop();
-		recorder.release();
-		player = new MediaPlayer();
-		player.setOnCompletionListener(this);
-		try {
-			player.setDataSource(archivo.getAbsolutePath());
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());
-		}
-		try {
-			player.prepare();
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());
-		}
-		ImageButton btnGrabarParar = (ImageButton) v;
-		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.microphone2));
-		if (archivo != null) {
-			ocultarPanelAudio(false);			
-		}
-	}
+	
 
 	public void reproducir(View v) {
 		Log.i(TAG, "Reproducir -> " + player.getDuration());
@@ -372,7 +372,6 @@ public class AsistenteTwoActivity extends Activity implements
 
 	@Override
 	public void onCompletion(MediaPlayer player) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "Completado");
 		progressBar.setProgress(0);
 
@@ -380,8 +379,11 @@ public class AsistenteTwoActivity extends Activity implements
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
+		Log.i(TAG, "OnDestroy");
 		super.onDestroy();
+		if (archivo != null) {
+			archivo.delete();
+		}		
 		servicio.cerrar();
 	}
 
