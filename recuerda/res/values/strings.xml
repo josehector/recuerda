@@ -16,11 +16,21 @@
     <string name="descrip_img_del">Borrar audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
     <string name="hint_nombre_recuerdo">Escribe el nombre...</string>
+    <string name="lbl_btnGuardar">Guardar</string>
+    <string name="lbl_btnCancelar">Cancelar</string>
+    <string name="lbl_btnAceptar">Aceptar</string>
+    <string name="tit_dialogError">Error</string>
+    <string name="tit_dialogInfo">Información</string>
+    <string name="lbl_btnSi">Si</string>
+    <string name="lbl_btnNo">No</string>
     
     <string name="msg_img_obligatorio">Debe seleccionar una imagen</string>
     <string name="msg_nombre_obligatorio">Debe escribir un nombre</string>
     <string name="msg_recuerdo_guardado">Recuerdo guardado correctamente</string>
     <string name="msg_dialog_borrar_recuerdo">¿Está seguro de borrar este recuerdo?</string>
+    <string name="msg_dialgo_guardar">Guardando...</string>
+    <string name="msg_dialog_error">Ocurrio un error</string>
+    <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>
     
     
     <string-array name="relaciones_array">
