@@ -67,7 +67,7 @@ public class ServicioRecuerdo {
 		try {
 			if (relacion.getId() == -1) {
 				Dao<Relacion, Integer> daoRelacion = dbRecuerdo
-						.getDao(Relacion.class);
+						.getDao(Relacion.class);				
 				daoRelacion.create(relacion);
 			}
 		} catch (SQLException e) {
