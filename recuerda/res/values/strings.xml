@@ -11,6 +11,8 @@
     <string name="txt_cargar_img">Por favor proporcione la imagen para el recuerdo.</string>
     <string name="txt_selec_relacion">Por favor seleccione la relación</string>
     <string name="txt_selec_audio">Por favor grabe un audio</string>
+    <string name="txt_nom_recuerdo">Nombre</string>
+    <string name="txt_nom_relacion">Relacion</string>
     <string name="lbl_nueva_relacion_nombre">Nombre</string>
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_img_del">Borrar audio</string>
