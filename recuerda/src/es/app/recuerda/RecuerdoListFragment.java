@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.text.style.BulletSpan;
 import android.util.Log;
@@ -35,18 +36,20 @@ public class RecuerdoListFragment extends ListFragment {
 	
 	private ServicioRecuerdo servicio;
 	private List<Recuerdo> listaRecuerdos;
+	private FragmentManager fragmentManager;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        
+        fragmentManager = getActivity().getSupportFragmentManager();
+        
         RecuerdaApp recuerdaApp = (RecuerdaApp) getActivity().getApplication();
         listaRecuerdos = recuerdaApp.getRecuerdos();
         if (listaRecuerdos == null) {
@@ -55,9 +58,7 @@ public class RecuerdoListFragment extends ListFragment {
             ((RecuerdaApp)getActivity().getApplicationContext()).setRecuerdos(listaRecuerdos);
             servicio.cerrar();
         }        
-        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), listaRecuerdos));        
-        //setListAdapter(new RecuerdoArrayAdatpter(getActivity(), DummyContent.ITEMS));
-        
+        setListAdapter(new RecuerdoArrayAdatpter(getActivity(), listaRecuerdos));                
     }
  
 
@@ -154,7 +155,6 @@ public class RecuerdoListFragment extends ListFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -184,7 +184,9 @@ public class RecuerdoListFragment extends ListFragment {
 								dialog.cancel();
 				        	   } catch (BBDDException e) {
 									Log.e(TAG, e.getMessage());
-									//TODO: indicar error al usuario					
+									dialog.cancel();
+									DialogError dialogError = new DialogError();
+									dialogError.show(fragmentManager, "tagAlerta");		
 								}
 				           }
 				       });

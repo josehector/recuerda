@@ -23,6 +23,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,12 +45,12 @@ import es.app.recuerda.entidades.WraperRecuerdo;
 import es.app.recuerda.exception.BBDDException;
 import es.app.recuerda.util.Util;
 
-public class AsistenteTwoActivity extends Activity implements
+public class AsistenteTwoActivity extends FragmentActivity implements
 		OnCompletionListener {
 
 	private static final String TAG = "AsistenteTwo";
 
-	private AlertDialog.Builder builder;
+	private AlertDialog.Builder dialogNewRelacion;
 	private Spinner spnRelacion;
 	private MediaRecorder recorder;
 	private MediaPlayer player;
@@ -65,6 +67,7 @@ public class AsistenteTwoActivity extends Activity implements
 	private ProgressDialog guardando;
 	private Context context;
 	private boolean grabar = true;
+	private FragmentManager fragmentManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class AsistenteTwoActivity extends Activity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		context = this;
+		fragmentManager = getSupportFragmentManager();		
 		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
 
 		servicio = new ServicioRecuerdo(this);
@@ -82,10 +86,13 @@ public class AsistenteTwoActivity extends Activity implements
 		imagenSelected = extras.getParcelable("IMG_SELECTED");
 
 		guardando = new ProgressDialog(this);
-		guardando.setMessage("Guardando...");
+		guardando.setMessage(getResources().getString(R.string.msg_dialgo_guardar));
+		
+		
 
-		builder = new AlertDialog.Builder(this);
-		builder.setPositiveButton("Guardar",
+		dialogNewRelacion = new AlertDialog.Builder(this);		
+		
+		dialogNewRelacion.setPositiveButton(R.string.lbl_btnGuardar,
 				new DialogInterface.OnClickListener() {
 
 					@Override
@@ -94,24 +101,33 @@ public class AsistenteTwoActivity extends Activity implements
 						Relacion relacion = new Relacion();
 						EditText etRelacion = (EditText) ((AlertDialog) dialog)
 								.findViewById(R.id.etNewRelacion);
-						Log.i(TAG, "Nuevo nombre relacion: "
-								+ etRelacion.getText().toString());
-						relacion.setNombre(etRelacion.getText().toString());
-						try {
-							servicio.guardar(relacion);
-							listAdapter.add(relacion);
-							((ArrayAdapter<Relacion>) spnRelacion.getAdapter())
-									.notifyDataSetChanged();
-							spnRelacion.setSelection(listAdapter.size() - 1);
-						} catch (BBDDException e) {
-							Log.e(TAG, e.getMessage());
-							// TODO: indicar error al usuario
+						String nombreRelacion = etRelacion.getText().toString();
+						if (nombreRelacion != null && !nombreRelacion.equals("")) {
+							Log.i(TAG, "Nuevo nombre relacion: "
+									+ nombreRelacion);
+							relacion.setNombre(nombreRelacion);
+							try {
+								servicio.guardar(relacion);
+								listAdapter.add(relacion);
+								((ArrayAdapter<Relacion>) spnRelacion
+										.getAdapter()).notifyDataSetChanged();
+								spnRelacion
+										.setSelection(listAdapter.size() - 1);
+								dialog.cancel();
+							} catch (BBDDException e) {
+								Log.e(TAG, e.getMessage());
+								dialog.cancel();
+								DialogError dialogError = new DialogError();
+								dialogError.show(fragmentManager, "tagAlerta");
+							}
+						} else {
+							Toast.makeText(context, R.string.msg_nombre_obligatorio, Toast.LENGTH_SHORT).show();							
 						}
-						dialog.cancel();
+						
 
 					}
 				});
-		builder.setNegativeButton("Cancelar",
+		dialogNewRelacion.setNegativeButton(R.string.lbl_btnCancelar,
 				new DialogInterface.OnClickListener() {
 
 					@Override
@@ -128,9 +144,9 @@ public class AsistenteTwoActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 				Log.i(TAG, "Crear nueva");
-				builder.setView(getLayoutInflater().inflate(
+				dialogNewRelacion.setView(getLayoutInflater().inflate(
 						R.layout.nueva_relacion, null));
-				builder.show();
+				dialogNewRelacion.show();
 			}
 		});
 
@@ -185,8 +201,8 @@ public class AsistenteTwoActivity extends Activity implements
 
 			image.setImageBitmap(bmpSelected);
 		} catch (FileNotFoundException e) {
-			Log.e(TAG, e.toString());
-			// TODO: indicar error al usuario
+			Log.e(TAG, "Error al carga la imagen");
+			Log.e(TAG, e.toString());			
 		}
 
 	}
@@ -220,7 +236,6 @@ public class AsistenteTwoActivity extends Activity implements
 
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
 			guardando.show();
 
 		}
@@ -250,7 +265,6 @@ public class AsistenteTwoActivity extends Activity implements
 
 		@Override
 		protected void onPostExecute(Recuerdo result) {
-			// TODO Auto-generated method stub
 			guardando.dismiss();
 			if (result != null) {
 				((RecuerdaApp) getApplication()).getRecuerdos().add(result);
@@ -260,66 +274,97 @@ public class AsistenteTwoActivity extends Activity implements
 						Toast.LENGTH_SHORT).show();
 				finish();
 			} else {
-				//TODO:Indicar error
+				Log.e(TAG, "No se pudo guardar el recuerdo");
+				DialogError dialogCerrar = new DialogError();
+				dialogCerrar.show(getSupportFragmentManager(), "tagError");
 			}
 		}
 
 	}
+	
+	private void grabar(View v) {
+		Log.i(TAG, "Iniciamos la grabacion");
+		ocultarPanelAudio(true);			
+		recorder = new MediaRecorder();
+		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		File path = new File(Environment.getExternalStorageDirectory()
+				.getPath());
+		try {
+			archivo = File.createTempFile("temporal", ".3gp", path);
+			archivo.deleteOnExit();
+			Log.i(TAG, archivo.getPath());
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
+		recorder.setOutputFile(archivo.getAbsolutePath());
+		try {
+			recorder.prepare();
+		} catch (IOException e) {
+		}
+		recorder.start();
+		ImageButton btnGrabarParar = (ImageButton) v;
+		btnGrabarParar.setImageDrawable(getResources().getDrawable(
+				R.drawable.player_stop));
+		grabar = false;
+	}
+	
+	private void parar(View v) {
+		Log.i(TAG, "Paramos la grabación");
+		recorder.stop();
+		recorder.release();
+		player = new MediaPlayer();
+		player.setOnCompletionListener(this);
+		try {
+			player.setDataSource(archivo.getAbsolutePath());
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
+		try {
+			player.prepare();
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
+		ImageButton btnGrabarParar = (ImageButton) v;
+		btnGrabarParar.setImageDrawable(getResources().getDrawable(
+				R.drawable.microphone2));
+		if (archivo != null) {
+			ocultarPanelAudio(false);			
+		}
+		grabar = true;
+	}
 
-	public void grabarParar(View v) {
-		if (grabar) {
-			Log.i(TAG, "Iniciamos la grabacion");
+	public void grabarParar(final View v) {
+		if (grabar) {			
 			if (archivo != null) {
-				//TODO: habría que indicar que el audio anterior va a ser borrado
-				archivo.delete();				
-			}
-			ocultarPanelAudio(true);			
-			recorder = new MediaRecorder();
-			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			File path = new File(Environment.getExternalStorageDirectory()
-					.getPath());
-			try {
-				archivo = File.createTempFile("temporal", ".3gp", path);
-				archivo.deleteOnExit();
-				Log.i(TAG, archivo.getPath());
-			} catch (IOException e) {
-				Log.e(TAG, e.getMessage());
-			}
-			recorder.setOutputFile(archivo.getAbsolutePath());
-			try {
-				recorder.prepare();
-			} catch (IOException e) {
-			}
-			recorder.start();
-			ImageButton btnGrabarParar = (ImageButton) v;
-			btnGrabarParar.setImageDrawable(getResources().getDrawable(
-					R.drawable.player_stop));
-			grabar = false;
+				AlertDialog.Builder dialogDelAudio = new AlertDialog.Builder(context);
+				dialogDelAudio.setMessage(R.string.msg_dialog_borrar_audio);
+				dialogDelAudio.setTitle(R.string.tit_dialogInfo);
+				dialogDelAudio.setPositiveButton(R.string.lbl_btnSi, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						archivo.delete();
+						grabar(v);
+						
+					}
+				});
+				dialogDelAudio.setNegativeButton(R.string.lbl_btnNo, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						
+					}
+				});		
+				dialogDelAudio.show();
+			} else {
+				grabar(v);
+			}			
 		} else {
-			Log.i(TAG, "Paramos la grabación");
-			recorder.stop();
-			recorder.release();
-			player = new MediaPlayer();
-			player.setOnCompletionListener(this);
-			try {
-				player.setDataSource(archivo.getAbsolutePath());
-			} catch (IOException e) {
-				Log.e(TAG, e.getMessage());
-			}
-			try {
-				player.prepare();
-			} catch (IOException e) {
-				Log.e(TAG, e.getMessage());
-			}
-			ImageButton btnGrabarParar = (ImageButton) v;
-			btnGrabarParar.setImageDrawable(getResources().getDrawable(
-					R.drawable.microphone2));
-			if (archivo != null) {
-				ocultarPanelAudio(false);			
-			}
-			grabar = true;
+			parar(v);			
 		}
 	}
 		
