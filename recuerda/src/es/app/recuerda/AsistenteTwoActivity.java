@@ -308,6 +308,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		btnGrabarParar.setImageDrawable(getResources().getDrawable(
 				R.drawable.player_stop));
 		grabar = false;
+		Toast.makeText(this, R.string.msg_grabar_audio, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void parar(View v) {
