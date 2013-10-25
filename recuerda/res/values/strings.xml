@@ -33,6 +33,7 @@
     <string name="msg_dialgo_guardar">Guardando...</string>
     <string name="msg_dialog_error">Ocurrio un error</string>
     <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>
+    <string name="msg_grabar_audio">Hable ahora ...</string>
     
     
     <string-array name="relaciones_array">
