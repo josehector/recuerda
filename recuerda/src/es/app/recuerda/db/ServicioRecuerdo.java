@@ -41,9 +41,7 @@ public class ServicioRecuerdo {
 		try {
 			Dao<Recuerdo, Integer> daoRecuerdo = dbRecuerdo
 					.getDao(Recuerdo.class);
-			lista = daoRecuerdo.queryForAll();
-			/*FileInputStream fileImg = new FileInputStream(pathImg);
-			imagen = BitmapFactory.decodeStream(fileImg, null, null);*/
+			lista = daoRecuerdo.queryForAll();			
 				
 		} catch (SQLException e) {
 			Log.e(TAG, "Error al recuperar los recuerdos");
@@ -171,16 +169,9 @@ public class ServicioRecuerdo {
 		return true;
 	}
 
-	private void prepare() {
-		File sdIconStorageDir = new File(Constantes.RUTA_APP);
-		// create storage directories, if they don't exist
-		sdIconStorageDir.mkdirs();
-
-	}
+	
 
 	private boolean storeImage(Bitmap imageData, String filename) {
-		// get path to external storage (SD card)
-		prepare();
 		try {
 			String filePath = Constantes.RUTA_APP + "/" + filename;
 			FileOutputStream fileOutputStream = new FileOutputStream(filePath);
