@@ -328,7 +328,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		}
 		ImageButton btnGrabarParar = (ImageButton) v;
 		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.microphone2));
+				R.drawable.microphone));
 		if (archivo != null) {
 			ocultarPanelAudio(false);			
 		}
