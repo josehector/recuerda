@@ -3,7 +3,7 @@
     package="es.app.recuerda"
     android:versionCode="1"
     android:versionName="1.0"
-    android:installLocation="preferExternal">
+    android:installLocation="auto">
 
     <uses-sdk
         android:minSdkVersion="12"
@@ -41,17 +41,22 @@
         <activity            
             android:name="es.app.recuerda.AsistenteActivity"
             android:label="@string/title_activity_asistente" 
-            android:theme="@style/AppTheme">
-             <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+            android:theme="@style/AppTheme">             
         </activity>
         <activity
             android:name="es.app.recuerda.AsistenteTwoActivity"
             android:label="@string/title_activity_asistente" 
             android:theme="@style/AppTheme">
+        </activity>
+        
+        <activity            
+            android:name="es.app.recuerda.JuegoActivity"
+            android:label="@string/title_activity_asistente" 
+            android:theme="@style/AppTheme">
+             <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
         </activity>
     </application>
 
