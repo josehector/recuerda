@@ -103,7 +103,12 @@ public class RecuerdoListActivity extends FragmentActivity implements
 	            Log.i(TAG, "Nuevo recuerdo!");
 	            Intent asistente = new Intent(this, AsistenteActivity.class);
 	            startActivityForResult(asistente, 1);
-	            return true;	        
+	            return true;	
+	        case R.id.action_game:
+	        	Log.i(TAG, "Jugar!");
+	        	Intent juego = new Intent(this, JuegoActivity.class);
+	            startActivityForResult(juego, 1);
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

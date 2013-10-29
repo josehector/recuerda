@@ -42,6 +42,11 @@ public class Util {
 		Log.i(TAG, "Comprobamos si el fichero " + path + " existe...." + (existe ? "SI" : "NO"));
 		return existe;
 	}
+	
+	public static int aleatorio(int x, int y) {
+		int valorEntero = (int) Math.floor(Math.random()*(y-x+1)+x);  // Valor entre x e y, ambos incluidos.
+		return valorEntero;
+	}
 
 
 }
