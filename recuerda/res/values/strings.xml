@@ -34,10 +34,20 @@
     <string name="msg_dialog_borrar_recuerdo">¿Está seguro de borrar este recuerdo?</string>
     <string name="msg_dialgo_guardar">Guardando...</string>
     <string name="msg_dialog_error">Ocurrio un error</string>
-    <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>
-    <string name="msg_dialog_correcto">ENHORABUENA</string>
-    <string name="msg_dialog_fallo">ERROR!!</string>    
+    <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>    
     <string name="msg_grabar_audio">Hable ahora ...</string>
+    
+    <string name="msg_dialog_correcto1">BIEN!!!</string>
+    <string name="msg_dialog_correcto2">GENIAL!!!</string>
+    <string name="msg_dialog_correcto3">PERFECTO!!!</string>
+    <string name="msg_dialog_correcto4">INCREIBLE!!!</string>
+    <string name="msg_dialog_correcto5">ESPECTACULAR!!!</string>
+    
+    <string name="msg_dialog_fallo1">INCORRECTO</string>
+    <string name="msg_dialog_fallo2">INCORRECTO</string>
+    <string name="msg_dialog_fallo3">INCORRECTO</string>
+    <string name="msg_dialog_fallo4">INCORRECTO</string>
+    <string name="msg_dialog_fallo5">INCORRECTO</string>
     
     
     <string-array name="relaciones_array">
