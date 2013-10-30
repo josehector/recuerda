@@ -36,10 +36,13 @@ public class JuegoActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.juego);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		juegoActivity = this;
 		RecuerdaApp recuerdaApp = (RecuerdaApp) getApplication();
 		partida = recuerdaApp.getPartida();
+		getActionBar().setDisplayHomeAsUpEnabled(true);		
+		getActionBar().setTitle("Partida " + partida.getNumPartida());
+		juegoActivity = this;
+		
+		
 				
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
@@ -98,15 +101,16 @@ public class JuegoActivity extends Activity{
 					int idImgButton = v.getId();
 					Recuerdo recuerdoImgButton = partida.getOpciones().get(idImgButton);
 					if (recuerdoImgButton.getId() == partida.getPregunta().getId()) {
-						//Acierto
+						Log.d(TAG, "Acierto");
 						partida.setNuevoJuego(true);
-						//desactivarOnClick();
+						partida.incrementarPartida();
+						partida.acierto();
 						DialogCorrecto correcto = new DialogCorrecto();						
-						correcto.show(getFragmentManager(), "tagCorrecto");
-						//finish();
-						//startActivity(getIntent());
+						correcto.show(getFragmentManager(), "tagCorrecto");						
 					} else {
 						//Error
+						Log.d(TAG, "Fallo");
+						partida.fallo();
 						DialogFallo fallo = new DialogFallo();
 						fallo.show(getFragmentManager(), "tagFallo");
 					}						
@@ -114,17 +118,7 @@ public class JuegoActivity extends Activity{
 			});
     	}
 	}
-	
-	private void desactivarOnClick() {
-		ImageButton imgOpcion1 = (ImageButton) findViewById(R.id.imgOpcion1);
-		imgOpcion1.setOnClickListener(null);
-		ImageButton imgOpcion2 = (ImageButton) findViewById(R.id.imgOpcion2);
-		imgOpcion2.setOnClickListener(null);
-		ImageButton imgOpcion3 = (ImageButton) findViewById(R.id.imgOpcion3);
-		imgOpcion3.setOnClickListener(null);
-		ImageButton imgOpcion4 = (ImageButton) findViewById(R.id.imgOpcion4);
-		imgOpcion4.setOnClickListener(null);
-	}
+		
 	
 	private void cargarOpcion(String imgPath, ImageButton imgButton) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -148,7 +142,7 @@ public class JuegoActivity extends Activity{
 			Log.e(TAG, "Error al mostrar imagenes");			
 		}
 	}
-	
+
 	private void inicializarMapa() {
 		partida.getOpciones().put(R.id.imgOpcion1, null);
 		partida.getOpciones().put(R.id.imgOpcion2, null);
@@ -160,6 +154,7 @@ public class JuegoActivity extends Activity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		//getMenuInflater().inflate(R.menu.recuerda, menu);
+		
 		return true;
 	}
 	
