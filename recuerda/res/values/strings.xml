@@ -35,6 +35,8 @@
     <string name="msg_dialgo_guardar">Guardando...</string>
     <string name="msg_dialog_error">Ocurrio un error</string>
     <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>
+    <string name="msg_dialog_correcto">ENHORABUENA</string>
+    <string name="msg_dialog_fallo">ERROR!!</string>    
     <string name="msg_grabar_audio">Hable ahora ...</string>
     
     
