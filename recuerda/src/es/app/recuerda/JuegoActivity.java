@@ -105,13 +105,12 @@ public class JuegoActivity extends Activity{
 						partida.setNuevoJuego(true);
 						partida.incrementarPartida();
 						partida.acierto();
-						DialogCorrecto correcto = new DialogCorrecto();						
-						correcto.show(getFragmentManager(), "tagCorrecto");						
+						DialogCorrecto correcto = DialogCorrecto.newInstance(partida.getMsgAcertar());						
+						correcto.show(getFragmentManager(), "tagCorrecto");
 					} else {
-						//Error
 						Log.d(TAG, "Fallo");
 						partida.fallo();
-						DialogFallo fallo = new DialogFallo();
+						DialogFallo fallo = DialogFallo.newInstance(partida.getMsgFallar());
 						fallo.show(getFragmentManager(), "tagFallo");
 					}						
 				}
