@@ -17,23 +17,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class JuegoActivity extends Activity{
 	private static final String TAG = JuegoActivity.class.getName();
-	private static final int NUM_OPCIONES = 4;
-
-	private ImageButton imgOpcion1;
-	private ImageButton imgOpcion2;
-	private ImageButton imgOpcion3;
-	private ImageButton imgOpcion4;
+		
 	private TextView recuerdoBuscar;
 	
 	private List<Recuerdo> listaRecuerdos;
-	private Map<Integer,Recuerdo> opciones = new HashMap<Integer, Recuerdo>(NUM_OPCIONES);
-	private Recuerdo pregunta;
+	private Partida partida;
+	private Activity juegoActivity;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,55 +37,93 @@ public class JuegoActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.juego);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		/*imgOpcion1 = (ImageButton) findViewById(R.id.imgOpcion1);
-		imgOpcion2 = (ImageButton) findViewById(R.id.imgOpcion2);
-		imgOpcion3 = (ImageButton) findViewById(R.id.imgOpcion3);
-		imgOpcion4 = (ImageButton) findViewById(R.id.imgOpcion4);*/
+		juegoActivity = this;
+		RecuerdaApp recuerdaApp = (RecuerdaApp) getApplication();
+		partida = recuerdaApp.getPartida();
+				
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
-        if (listaRecuerdos == null) {
-        	ServicioRecuerdo servicio = new ServicioRecuerdo(this);
-            listaRecuerdos = servicio.getListaRecuerdos();           
-            servicio.cerrar();
-        }
-        if (listaRecuerdos != null && listaRecuerdos.size() >= NUM_OPCIONES) {
-        	inicializarMapa();
-        	int intRespuesta = Util.aleatorio(0, listaRecuerdos.size()-1);
-        	Log.i(TAG, "Numero aleatorio elegido " + intRespuesta);
-        	pregunta = listaRecuerdos.remove(intRespuesta);
-        	recuerdoBuscar.setText(pregunta.getNombre());
-        	int intOpcionResp = Util.aleatorio(0, NUM_OPCIONES-1);
-        	List<Integer> listaKeys = new ArrayList<Integer>(opciones.keySet());
-        	int idOpcionMapa = listaKeys.remove(intOpcionResp);
-        	opciones.put(idOpcionMapa, pregunta);
-        	
-        	for (int i = 0; i < NUM_OPCIONES - 1; i++) {
-        		int intOpcion = Util.aleatorio(0, listaRecuerdos.size()-1);
-        		Recuerdo recuerdoOpcion = listaRecuerdos.remove(intOpcion);
-        		int idOpcion = listaKeys.remove(0);
-        		Log.d(TAG, idOpcion + " - " + recuerdoOpcion.getNombre());
-        		opciones.put(idOpcion, recuerdoOpcion);
-        	}
-        	//En el Map opciones estan las posibles respuestas de recuerdos
-        	for(int idImg : opciones.keySet()) {
-        		final Recuerdo recuerdo = opciones.get(idImg);
-        		final ImageButton imgOpcion = (ImageButton) findViewById(idImg);
-            	ViewTreeObserver vto = imgOpcion.getViewTreeObserver();
-            	vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-					@Override
-					public boolean onPreDraw() {
-						cargarOpcion(recuerdo.getPathImg(), imgOpcion);
-						imgOpcion.getViewTreeObserver().removeOnPreDrawListener(this);						
-						return false;
-					}            		
-            	});
-        	}
+        if (partida.isNuevoJuego()) {
+			if (listaRecuerdos == null) {
+				//Se podría obtener la lista del contexto ya que antes de llegar aquí se carga la lista de recuerdos
+				ServicioRecuerdo servicio = new ServicioRecuerdo(this);
+				listaRecuerdos = servicio.getListaRecuerdos();
+				servicio.cerrar();
+			}
+			if (listaRecuerdos != null && listaRecuerdos.size() >= Partida.NUM_OPCIONES) {
+				Log.i(TAG, "Creamos nuevo juego");
+				partida.setNuevoJuego(false);				
+				inicializarMapa();
+				int intRespuesta = Util.aleatorio(0, listaRecuerdos.size() - 1);
+				Log.i(TAG, "Numero aleatorio elegido " + intRespuesta);
+				partida.setPregunta(listaRecuerdos.remove(intRespuesta));				
+				int intOpcionResp = Util.aleatorio(0, Partida.NUM_OPCIONES - 1);
+				List<Integer> listaKeys = new ArrayList<Integer>(
+						partida.getOpciones().keySet());
+				int idOpcionMapa = listaKeys.remove(intOpcionResp);
+				partida.getOpciones().put(idOpcionMapa, partida.getPregunta());
 
-        	
-        } else {
-        	Log.i(TAG, "No existe los suficientes recuerdos para empezar un juego");
-        }
+				for (int i = 0; i < Partida.NUM_OPCIONES - 1; i++) {
+					int intOpcion = Util
+							.aleatorio(0, listaRecuerdos.size() - 1);
+					Recuerdo recuerdoOpcion = listaRecuerdos.remove(intOpcion);
+					int idOpcion = listaKeys.remove(0);
+					Log.d(TAG, idOpcion + " - " + recuerdoOpcion.getNombre());
+					partida.getOpciones().put(idOpcion, recuerdoOpcion);
+				}
+			} else {
+				Log.i(TAG,
+						"No existe los suficientes recuerdos para empezar un juego");
+				setResult(RESULT_CANCELED);
+				finish();
+			}
+		}
+		//En el Map opciones estan las posibles respuestas de recuerdos
+        recuerdoBuscar.setText(partida.getPregunta().getNombre());
+    	for(int idImg : partida.getOpciones().keySet()) {
+    		final Recuerdo recuerdo = partida.getOpciones().get(idImg);
+    		final ImageButton imgOpcion = (ImageButton) findViewById(idImg);
+        	ViewTreeObserver vto = imgOpcion.getViewTreeObserver();
+        	vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+				@Override
+				public boolean onPreDraw() {
+					cargarOpcion(recuerdo.getPathImg(), imgOpcion);
+					imgOpcion.getViewTreeObserver().removeOnPreDrawListener(this);						
+					return false;
+				}            		
+        	});
+        	imgOpcion.setOnClickListener(new View.OnClickListener() {					
+				@Override
+				public void onClick(View v) {
+					int idImgButton = v.getId();
+					Recuerdo recuerdoImgButton = partida.getOpciones().get(idImgButton);
+					if (recuerdoImgButton.getId() == partida.getPregunta().getId()) {
+						//Acierto
+						partida.setNuevoJuego(true);
+						//desactivarOnClick();
+						DialogCorrecto correcto = new DialogCorrecto();						
+						correcto.show(getFragmentManager(), "tagCorrecto");
+						//finish();
+						//startActivity(getIntent());
+					} else {
+						//Error
+						DialogFallo fallo = new DialogFallo();
+						fallo.show(getFragmentManager(), "tagFallo");
+					}						
+				}
+			});
+    	}
+	}
+	
+	private void desactivarOnClick() {
+		ImageButton imgOpcion1 = (ImageButton) findViewById(R.id.imgOpcion1);
+		imgOpcion1.setOnClickListener(null);
+		ImageButton imgOpcion2 = (ImageButton) findViewById(R.id.imgOpcion2);
+		imgOpcion2.setOnClickListener(null);
+		ImageButton imgOpcion3 = (ImageButton) findViewById(R.id.imgOpcion3);
+		imgOpcion3.setOnClickListener(null);
+		ImageButton imgOpcion4 = (ImageButton) findViewById(R.id.imgOpcion4);
+		imgOpcion4.setOnClickListener(null);
 	}
 	
 	private void cargarOpcion(String imgPath, ImageButton imgButton) {
@@ -111,15 +145,15 @@ public class JuegoActivity extends Activity{
 			Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());	
 			imgButton.setImageBitmap(mBitmap);
 		} catch (FileNotFoundException e) {
-			Log.e(TAG, "Error al mostrar imagenes");
+			Log.e(TAG, "Error al mostrar imagenes");			
 		}
 	}
 	
 	private void inicializarMapa() {
-		opciones.put(R.id.imgOpcion1, null);
-		opciones.put(R.id.imgOpcion2, null);
-		opciones.put(R.id.imgOpcion3, null);
-		opciones.put(R.id.imgOpcion4, null);
+		partida.getOpciones().put(R.id.imgOpcion1, null);
+		partida.getOpciones().put(R.id.imgOpcion2, null);
+		partida.getOpciones().put(R.id.imgOpcion3, null);
+		partida.getOpciones().put(R.id.imgOpcion4, null);
 	}
 	
 	@Override

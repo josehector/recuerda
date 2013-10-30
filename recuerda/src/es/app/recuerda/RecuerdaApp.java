@@ -9,9 +9,11 @@ import android.app.Application;
 
 public class RecuerdaApp extends Application {
 	private List<Recuerdo> recuerdos;
+	private Partida partida;
 	
 	public RecuerdaApp() {
 		recuerdos = null;
+		partida = new Partida();
 	}
 
 	public List<Recuerdo> getRecuerdos() {
@@ -33,4 +35,12 @@ public class RecuerdaApp extends Application {
 		return null;
 	}
 
+	public Partida getPartida() {
+		return partida;
+	}
+
+	public void setPartida(Partida partida) {
+		this.partida = partida;
+	}
+	
 }
