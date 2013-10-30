@@ -17,11 +17,11 @@
         android:layout_marginBottom="20dp">        
 	    
 	    <TextView
-	        android:id="@+id/tv"
+	        android:id="@+id/tvDialogCorrecto"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"	        
 	        android:layout_gravity="center_vertical"
-	        android:text="@string/msg_dialog_correcto"
+	        android:text="@string/msg_dialog_correcto1"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     </LinearLayout>
