@@ -26,7 +26,7 @@
 	        android:layout_height="wrap_content"	        
 	        android:layout_gravity="center_vertical"
 	        android:text="@string/frase1_error"
-	        android:textAppearance="?android:attr/textAppearanceLarge" 
+	        style="@style/frasesDialog"
 	        android:gravity="center"
 	        android:layout_marginBottom="5dp"/>
 	    
@@ -36,7 +36,7 @@
 	        android:layout_height="wrap_content"	        
 	        android:layout_gravity="right"	        
 	        android:text="@string/autor_frase1_error"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/autorFrasesDialog"/>
     
     </LinearLayout>
         

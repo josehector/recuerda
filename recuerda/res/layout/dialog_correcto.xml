@@ -27,7 +27,7 @@
 	        android:layout_gravity="center_vertical"	
 	        android:gravity="center"        
 	        android:text="@string/frase1"
-	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        style="@style/frasesDialog"	        
 	        android:layout_marginBottom="5dp"/>
 	    
 	    <TextView
@@ -36,7 +36,7 @@
 	        android:layout_height="wrap_content"	        
 	        android:layout_gravity="right"	        
 	        android:text="@string/autor_frase1"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/autorFrasesDialog"/>
 	    </LinearLayout>
     
 </LinearLayout>
