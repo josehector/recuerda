@@ -3,13 +3,8 @@ package es.app.recuerda;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import es.app.recuerda.db.ServicioRecuerdo;
-import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.util.Util;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +16,9 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import es.app.recuerda.db.ServicioRecuerdo;
+import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.util.Util;
 
 public class JuegoActivity extends Activity{
 	private static final String TAG = JuegoActivity.class.getName();
@@ -29,7 +27,6 @@ public class JuegoActivity extends Activity{
 	
 	private List<Recuerdo> listaRecuerdos;
 	private Partida partida;
-	private Activity juegoActivity;
 	private RecuerdaApp recuerdaApp;
 	
 	@Override
@@ -40,7 +37,6 @@ public class JuegoActivity extends Activity{
 		recuerdaApp = (RecuerdaApp) getApplication();
 		partida = recuerdaApp.getPartida();
 		getActionBar().setDisplayHomeAsUpEnabled(true);				
-		juegoActivity = this;				
 				
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
