@@ -38,22 +38,22 @@
     <string name="msg_grabar_audio">Hable ahora ...</string>
         
     
-    <string name="frase1_error">El mayor error que una persona puede cometer es tener miedo de cometer un error.</string>
+    <string name="frase1_error">\"El mayor error que una persona puede cometer es tener miedo de cometer un error.\"</string>
     <string name="autor_frase1_error">Elbert Hubbard</string>
      
     
-    <string name="frase1">El verdadero viaje se hace en la memoria.</string>
+    <string name="frase1">\"El verdadero viaje se hace en la memoria.\"</string>
     <string name="autor_frase1">Proust, Marcel</string>
-    <string name="frase2">Nada graba tan fijamente en nuestra memoria alguna cosa como el deseo de olvidarla.</string>
-    <string name="autor_frase2">Montaigne Michel de</string>
-    <!-- <string name="frase3"></string>
-    <string name="autor_frase3"></string>
-    <string name="frase4"></string>
-    <string name="autor_frase4"></string>
-    <string name="frase5"></string>
-    <string name="autor_frase5"></string>
-    <string name="frase6"></string>
-    <string name="autor_frase6"></string>
+    <string name="frase2">\"Nada graba tan fijamente en nuestra memoria alguna cosa como el deseo de olvidarla.\"</string>
+    <string name="autor_frase2">Montaigne, Michel de</string>
+    <!-- <string name="frase3">\"Gracias a la memoria se da en los hombres lo que se llama experiencia.\"</string>
+    <string name="autor_frase3">Aristóteles</string>
+    <string name="frase4">\"La imaginación no es más que el aprovechamiento de lo que se tiene en la memoria.\"</string>
+    <string name="autor_frase4">Bonnard, Pierre</string>
+    <string name="frase5">\"La memoria es el centinela del cerebro.\"</string>
+    <string name="autor_frase5">Shakespeare, William</string>
+    <string name="frase6">\"No hay melancolía sin memoria ni memoria sin melancolía.\"</string>
+    <string name="autor_frase6">Proust, Marcel</string>
     <string name="frase7"></string>
     <string name="autor_frase7"></string>
     <string name="frase8"></string>
