@@ -27,15 +27,17 @@ public class DialogCorrecto extends DialogFragment {
 		Dialog dialogCorrecto = new Dialog(getActivity(), android.R.style.Theme_Translucent);
 		dialogCorrecto.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialogCorrecto.setContentView(R.layout.dialog_correcto);
-		TextView txtView = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto);
+		final TextView txtView = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto);
 		txtView.setText(msg[0]);
-		TextView txtView2 = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto2);
+		final TextView txtView2 = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto2);
 		txtView2.setText(msg[1]);
 
 		LinearLayout llDialogCorrecto = (LinearLayout) dialogCorrecto.findViewById(R.id.llDialogCorrecto);
 	    llDialogCorrecto.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
+				txtView2.setText("");
+				txtView.setText(R.string.msg_cargando_juego);
 				getActivity().finish();
 				getActivity().startActivity(getActivity().getIntent());				
 			}
