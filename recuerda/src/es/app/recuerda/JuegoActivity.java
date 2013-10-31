@@ -39,11 +39,8 @@ public class JuegoActivity extends Activity{
 		setContentView(R.layout.juego);
 		recuerdaApp = (RecuerdaApp) getApplication();
 		partida = recuerdaApp.getPartida();
-		getActionBar().setDisplayHomeAsUpEnabled(true);		
-		getActionBar().setTitle("Partida " + partida.getNumPartida());
-		juegoActivity = this;
-		
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);				
+		juegoActivity = this;				
 				
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
@@ -82,6 +79,7 @@ public class JuegoActivity extends Activity{
 				finish();
 			}
 		}
+        getActionBar().setTitle("Seleccione la imagen de " + partida.getPregunta().getNombre());
 		//En el Map opciones estan las posibles respuestas de recuerdos
         recuerdoBuscar.setText(partida.getPregunta().getNombre());
     	for(int idImg : partida.getOpciones().keySet()) {

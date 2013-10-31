@@ -22,7 +22,7 @@ public class DialogFallo extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		int[] msg = getArguments().getIntArray("msg");
-		Dialog dialogFallo = new Dialog(getActivity(), android.R.style.Theme_Translucent);
+		final Dialog dialogFallo = new Dialog(getActivity(), android.R.style.Theme_Translucent);
 		dialogFallo.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialogFallo.setContentView(R.layout.dialog_fallo);
 		TextView txtView = (TextView) dialogFallo.findViewById(R.id.tvDialogFallo);
@@ -33,7 +33,7 @@ public class DialogFallo extends DialogFragment {
 		LinearLayout llDialogFallo = (LinearLayout) dialogFallo.findViewById(R.id.llDialogFallo);		
 		llDialogFallo.setOnClickListener(new View.OnClickListener() {			
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
 				dismiss();				
 			}
 		});
