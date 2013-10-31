@@ -11,7 +11,7 @@ import es.app.recuerda.util.Util;
 import android.app.Application;
 
 public class RecuerdaApp extends Application {
-	private static final int NUM_FRASES = 2;
+	private static final int NUM_FRASES = 6;
 	private List<Recuerdo> recuerdos;
 	private Partida partida;
 	private Map<Integer, Integer> mapaFrases;
@@ -27,6 +27,10 @@ public class RecuerdaApp extends Application {
 		mapaFrases = new HashMap<Integer, Integer>(NUM_FRASES);
 		mapaFrases.put(R.string.frase1, R.string.autor_frase1);
 		mapaFrases.put(R.string.frase2, R.string.autor_frase2);
+		mapaFrases.put(R.string.frase3, R.string.autor_frase3);
+		mapaFrases.put(R.string.frase4, R.string.autor_frase4);
+		mapaFrases.put(R.string.frase5, R.string.autor_frase5);
+		mapaFrases.put(R.string.frase6, R.string.autor_frase6);
 	}
 
 	public List<Recuerdo> getRecuerdos() {
