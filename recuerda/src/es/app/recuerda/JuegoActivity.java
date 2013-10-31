@@ -30,13 +30,14 @@ public class JuegoActivity extends Activity{
 	private List<Recuerdo> listaRecuerdos;
 	private Partida partida;
 	private Activity juegoActivity;
+	private RecuerdaApp recuerdaApp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.juego);
-		RecuerdaApp recuerdaApp = (RecuerdaApp) getApplication();
+		recuerdaApp = (RecuerdaApp) getApplication();
 		partida = recuerdaApp.getPartida();
 		getActionBar().setDisplayHomeAsUpEnabled(true);		
 		getActionBar().setTitle("Partida " + partida.getNumPartida());
@@ -105,12 +106,12 @@ public class JuegoActivity extends Activity{
 						partida.setNuevoJuego(true);
 						partida.incrementarPartida();
 						partida.acierto();
-						DialogCorrecto correcto = DialogCorrecto.newInstance(partida.getMsgAcertar());						
+						DialogCorrecto correcto = DialogCorrecto.newInstance(recuerdaApp.getFrase());						
 						correcto.show(getFragmentManager(), "tagCorrecto");
 					} else {
 						Log.d(TAG, "Fallo");
 						partida.fallo();
-						DialogFallo fallo = DialogFallo.newInstance(partida.getMsgFallar());
+						DialogFallo fallo = DialogFallo.newInstance(recuerdaApp.getFraseError());
 						fallo.show(getFragmentManager(), "tagFallo");
 					}						
 				}

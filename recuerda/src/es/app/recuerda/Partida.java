@@ -97,36 +97,6 @@ public class Partida {
 
 	public void setFalladas(int falladas) {
 		this.falladas = falladas;
-	}
-	
-	public int getMsgAcertar() {
-		if (acertadas >= TRAMO0 && acertadas < TRAMO1) {
-			return R.string.msg_dialog_correcto1;
-		} else if (acertadas >= TRAMO1 && acertadas < TRAMO2) {
-			return R.string.msg_dialog_correcto2;
-		} else if (acertadas >= TRAMO2 && acertadas < TRAMO3) {
-			return R.string.msg_dialog_correcto3;
-		} else if (acertadas >= TRAMO3 && acertadas < TRAMO4) {
-			return R.string.msg_dialog_correcto4;
-		} else if (acertadas >= TRAMO4) {
-			return R.string.msg_dialog_correcto5;
-		}
-		return R.string.msg_dialog_correcto1;
-	}
-	
-	public int getMsgFallar() {
-		if (acertadas >= TRAMO0 && acertadas < TRAMO1) {
-			return R.string.msg_dialog_fallo1;
-		} else if (acertadas >= TRAMO1 && acertadas < TRAMO2) {
-			return R.string.msg_dialog_fallo2;
-		} else if (acertadas >= TRAMO2 && acertadas < TRAMO3) {
-			return R.string.msg_dialog_fallo3;
-		} else if (acertadas >= TRAMO3 && acertadas < TRAMO4) {
-			return R.string.msg_dialog_fallo4;
-		} else if (acertadas >= TRAMO4) {
-			return R.string.msg_dialog_fallo5;
-		}
-		return R.string.msg_dialog_fallo1;
-	}
+	}	
 
 }

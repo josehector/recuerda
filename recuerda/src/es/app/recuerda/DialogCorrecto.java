@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DialogCorrecto extends DialogFragment {
 	private static final String TAG = DialogCorrecto.class.getName();
 	
-	public static DialogCorrecto newInstance(int msg) {
+	public static DialogCorrecto newInstance(int[] msg) {
         DialogCorrecto frag = new DialogCorrecto();
-        Bundle args = new Bundle();
-        args.putInt("msg", msg);
+        Bundle args = new Bundle();        
+        args.putIntArray("msg", msg);
         frag.setArguments(args);
         return frag;
     }
@@ -22,15 +23,17 @@ public class DialogCorrecto extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		int msg = getArguments().getInt("msg");
+		int[] msg = getArguments().getIntArray("msg");
 		Dialog dialogCorrecto = new Dialog(getActivity(), android.R.style.Theme_Translucent);
 		dialogCorrecto.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialogCorrecto.setContentView(R.layout.dialog_correcto);
 		TextView txtView = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto);
-		txtView.setText(msg);
+		txtView.setText(msg[0]);
+		TextView txtView2 = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto2);
+		txtView2.setText(msg[1]);
 
-	    ImageButton imgBtn = (ImageButton) dialogCorrecto.findViewById(R.id.btnOkDialogCorrecto);
-	    imgBtn.setOnClickListener(new View.OnClickListener() {			
+		LinearLayout llDialogCorrecto = (LinearLayout) dialogCorrecto.findViewById(R.id.llDialogCorrecto);
+	    llDialogCorrecto.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				getActivity().finish();
