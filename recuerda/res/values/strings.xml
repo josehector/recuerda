@@ -36,6 +36,7 @@
     <string name="msg_dialog_error">Ocurrio un error</string>
     <string name="msg_dialog_borrar_audio">¿Desea borrar el audio?</string>    
     <string name="msg_grabar_audio">Hable ahora ...</string>
+    <string name="msg_cargando_juego">Cargando siguiente partida ...</string>
         
     
     <string name="frase1_error">\"El mayor error que una persona puede cometer es tener miedo de cometer un error.\"</string>
