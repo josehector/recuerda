@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.text.style.BulletSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import es.app.recuerda.db.ServicioRecuerdo;
-//import es.app.recuerda.dummy.DummyContent;
 import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.entidades.WraperRecuerdo;
 import es.app.recuerda.exception.BBDDException;
 
 /**
