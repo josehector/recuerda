@@ -133,7 +133,7 @@ public class RecuerdoListActivity extends FragmentActivity implements
 		if (resultCode == RESULT_OK) {
 			this.recreate();
 		} else if (resultCode == JuegoActivity.NO_RECUERDOS) {
-
+			Log.i(TAG, "No se ha podido jugar por falta de recuerdos");
 		}
 	}
 
