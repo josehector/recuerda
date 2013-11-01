@@ -1,23 +1,13 @@
 package es.app.recuerda;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-
-import es.app.recuerda.db.ServicioRecuerdo;
-import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.exception.BBDDException;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.Toast;
 
 /**
  * An activity representing a list of Recuerdos. This activity has different
