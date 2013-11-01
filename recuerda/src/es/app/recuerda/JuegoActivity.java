@@ -22,6 +22,7 @@ import es.app.recuerda.util.Util;
 
 public class JuegoActivity extends Activity{
 	private static final String TAG = JuegoActivity.class.getName();
+	public static final int NO_RECUERDOS = 2;
 		
 	private TextView recuerdoBuscar;
 	
@@ -71,7 +72,7 @@ public class JuegoActivity extends Activity{
 			} else {
 				Log.i(TAG,
 						"No existe los suficientes recuerdos para empezar un juego");
-				setResult(RESULT_CANCELED);
+				setResult(NO_RECUERDOS);
 				finish();
 			}
 		}

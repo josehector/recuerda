@@ -1,7 +1,14 @@
 package es.app.recuerda;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
+import es.app.recuerda.db.ServicioRecuerdo;
+import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.exception.BBDDException;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -32,12 +39,13 @@ public class RecuerdoListActivity extends FragmentActivity implements
 		RecuerdoListFragment.Callbacks {
 
 	private static final String TAG = "RecuerdoListActivity";
-	
+
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
 	 */
 	private boolean mTwoPane;
+	private AlertDialog.Builder dialogJuego;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,8 @@ public class RecuerdoListActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recuerdo_list);
 
-		
+		dialogJuego = new AlertDialog.Builder(this);
+
 		if (findViewById(R.id.recuerdo_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and
@@ -95,33 +104,47 @@ public class RecuerdoListActivity extends FragmentActivity implements
 		getMenuInflater().inflate(R.menu.recuerda, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case R.id.action_add:
-	            Log.i(TAG, "Nuevo recuerdo!");
-	            Intent asistente = new Intent(this, AsistenteActivity.class);
-	            startActivityForResult(asistente, 1);
-	            return true;	
-	        case R.id.action_game:
-	        	Log.i(TAG, "Jugar!");
-	        	Intent juego = new Intent(this, JuegoActivity.class);
-	            startActivityForResult(juego, 1);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_add:
+			Log.i(TAG, "Nuevo recuerdo!");
+			Intent asistente = new Intent(this, AsistenteActivity.class);
+			startActivityForResult(asistente, 1);
+			return true;
+		case R.id.action_game:
+			Log.i(TAG, "Jugar!");
+			RecuerdaApp recuerdaApp = (RecuerdaApp) getApplication();
+			if (recuerdaApp.getRecuerdos() != null
+					&& recuerdaApp.getRecuerdos().size() >= Partida.NUM_OPCIONES) {
+				Intent juego = new Intent(this, JuegoActivity.class);
+				startActivityForResult(juego, 1);
+			} else {
+				Log.i(TAG, "No existen los suficientes recuerdos para jugar");
+				dialogJuego.setMessage(R.string.msg_dialog_nojuego);
+				dialogJuego.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.dismiss();
+							}
+						});
+				dialogJuego.show();
+			}
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			this.recreate();
+		} else if (resultCode == JuegoActivity.NO_RECUERDOS) {
+
 		}
 	}
-	
-	
-	
-	
+
 }
