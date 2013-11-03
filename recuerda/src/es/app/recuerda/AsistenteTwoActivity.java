@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,7 +27,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -421,6 +418,16 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		Log.i(TAG, "Completado");
 		progressBar.setProgress(0);
 
+	}
+	
+	
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (guardando != null) {
+			guardando.dismiss();
+		}
 	}
 
 	@Override

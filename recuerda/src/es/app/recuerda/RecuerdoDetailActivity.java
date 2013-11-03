@@ -56,6 +56,7 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			Log.i(TAG, "volver");
 			// This ID represents the Home or Up button. In the case of this
 			// activity, the Up button is shown. Use NavUtils to allow users
 			// to navigate up one level in the application structure. For
@@ -73,5 +74,5 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 }
