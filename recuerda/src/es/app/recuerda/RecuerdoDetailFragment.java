@@ -3,9 +3,7 @@ package es.app.recuerda;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -22,7 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.entidades.WraperRecuerdo;
 import es.app.recuerda.util.Util;
 
 /**
@@ -145,6 +142,14 @@ public class RecuerdoDetailFragment extends Fragment implements OnCompletionList
 		return rootView;
 	}
 	
+	@Override
+	public void onDestroyView() {
+		Log.i(TAG, "onDestroyView");
+		super.onDestroyView();
+		if (getPlayer() != null && getPlayer().isPlaying()) {
+			getPlayer().stop();
+		}
+	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {

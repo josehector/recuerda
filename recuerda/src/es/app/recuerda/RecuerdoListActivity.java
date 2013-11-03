@@ -35,6 +35,7 @@ public class RecuerdoListActivity extends FragmentActivity implements
 	 * device.
 	 */
 	private boolean mTwoPane;
+	private RecuerdoDetailFragment fragment;
 	private AlertDialog.Builder dialogJuego;
 
 	@Override
@@ -74,7 +75,7 @@ public class RecuerdoListActivity extends FragmentActivity implements
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(RecuerdoDetailFragment.ARG_ITEM_ID, id);
-			RecuerdoDetailFragment fragment = new RecuerdoDetailFragment();
+			fragment = new RecuerdoDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.recuerdo_detail_container, fragment).commit();
@@ -136,5 +137,16 @@ public class RecuerdoListActivity extends FragmentActivity implements
 			Log.i(TAG, "No se ha podido jugar por falta de recuerdos");
 		}
 	}
+
+	@Override
+	protected void onPause() {
+		Log.i(TAG, "onPause");
+		super.onPause();
+		if (fragment != null && fragment.getPlayer() != null) {
+			fragment.getPlayer().stop();
+		}
+	}
+	
+	
 
 }

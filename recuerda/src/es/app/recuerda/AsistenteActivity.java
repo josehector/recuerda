@@ -38,6 +38,7 @@ public class AsistenteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente);
 		Log.i(TAG, "Iniciamos el asistente");
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		nombreRecuerdo = "";
 		etNombre = (EditText) findViewById(R.id.etAsNombre);
 		etNombre.setText("");
@@ -123,7 +124,12 @@ public class AsistenteActivity extends Activity {
 	            	siguiente.putExtra("NOMBRE_SELECTED", nombreRecuerdo);
 	            	startActivityForResult(siguiente,2);
 	            }
-	            return true;	        
+	            return true;
+	        case android.R.id.home:
+	        	Log.i(TAG, "Volver");
+	        	setResult(RESULT_CANCELED);
+	        	finish();
+	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
