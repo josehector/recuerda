@@ -14,11 +14,13 @@
     <string name="txt_selec_audio">Por favor grabe un audio</string>
     <string name="txt_nom_recuerdo">Nombre</string>
     <string name="txt_nom_relacion">Relacion</string>
+    <string name="txt_duracion">00:00</string>
     <string name="lbl_nueva_relacion_nombre">Nombre</string>
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_img_del">Borrar audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
     <string name="descrip_img_juego">Opcion de respuesta</string>
+    <!-- <string name="descrip_btn_stop">Parar la grabación</string> -->
     <string name="hint_nombre_recuerdo">Escribe el nombre...</string>
     <string name="lbl_btnGuardar">Guardar</string>
     <string name="lbl_btnCancelar">Cancelar</string>
@@ -38,6 +40,8 @@
     <string name="msg_dialog_nojuego">Debe tener, al menos, 4 recuerdos para poder jugar.</string>
     <string name="msg_grabar_audio">Hable ahora ...</string>
     <string name="msg_cargando_juego">Cargando siguiente partida ...</string>
+    <string name="msg_dialog_grabando">Grabando ...</string>
+    <string name="msg_dialog_reproduciendo">Reproduciendo...</string>
         
     
     <string name="frase1_error">\"El mayor error que una persona puede cometer es tener miedo de cometer un error.\"</string>
