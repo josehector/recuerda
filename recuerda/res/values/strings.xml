@@ -11,7 +11,7 @@
     <string name="descrip_img_recuerdo">Boton para cargar la imagen del recuerdo</string>
     <string name="txt_cargar_img">Por favor proporcione la imagen para el recuerdo.</string>
     <string name="txt_selec_relacion">Por favor seleccione la relación</string>
-    <string name="txt_selec_audio">Por favor grabe un audio</string>
+    <string name="txt_selec_audio">Grabar audio</string>
     <string name="txt_nom_recuerdo">Nombre</string>
     <string name="txt_nom_relacion">Relacion</string>
     <string name="txt_duracion">00:00</string>
