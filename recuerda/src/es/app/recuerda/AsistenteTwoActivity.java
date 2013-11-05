@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,21 +20,22 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import es.app.recuerda.db.ServicioRecuerdo;
 import es.app.recuerda.entidades.Recuerdo;
@@ -55,9 +57,6 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	private Bitmap bmpSelected;
 	private String nombreSelected;
 	private Uri imagenSelected;
-	private ProgressBar progressBar;
-	private Handler mHandler = new Handler();
-	private int mProgressStatus = 0;
 	private ServicioRecuerdo servicio;
 	private List<Relacion> listAdapter;
 	private ImageView image;
@@ -65,6 +64,8 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	private Context context;
 	private boolean grabar = true;
 	private FragmentManager fragmentManager;
+	private Dialog dialogReproducir;
+	private CountDownTimer count;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		context = this;
-		fragmentManager = getSupportFragmentManager();		
-		progressBar = (ProgressBar) findViewById(R.id.pbAudio);
+		fragmentManager = getSupportFragmentManager();
 
 		servicio = new ServicioRecuerdo(this);
 
@@ -300,15 +300,14 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 			recorder.prepare();
 		} catch (IOException e) {
 		}
-		recorder.start();
-		ImageButton btnGrabarParar = (ImageButton) v;
-		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.player_stop));
+		DialogoGrabando grabando = new DialogoGrabando();
+		grabando.show(fragmentManager, "dialogGrabando");
+		recorder.start();		
 		grabar = false;
 		Toast.makeText(this, R.string.msg_grabar_audio, Toast.LENGTH_SHORT).show();
 	}
 	
-	private void parar(View v) {
+	public void parar(View v) {
 		Log.i(TAG, "Paramos la grabación");
 		recorder.stop();
 		recorder.release();
@@ -324,9 +323,9 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());
 		}
-		ImageButton btnGrabarParar = (ImageButton) v;
+		/*ImageButton btnGrabarParar = (ImageButton) v;
 		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.microphone));
+				R.drawable.microphone));*/
 		if (archivo != null) {
 			ocultarPanelAudio(false);			
 		}
@@ -370,33 +369,53 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 
 	public void reproducir(View v) {
 		Log.i(TAG, "Reproducir -> " + player.getDuration());
+		dialogReproducir = new Dialog(this, android.R.style.Theme_Translucent);
+		dialogReproducir.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialogReproducir.setContentView(R.layout.reproducir_audio);
+		LinearLayout llDialogReproducir = (LinearLayout) dialogReproducir.findViewById(R.id.llDialogReproducir);
+		final TextView txtCount = (TextView) dialogReproducir.findViewById(R.id.txtCount);
+		llDialogReproducir.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				player.stop();				
+				count.cancel();
+				try {
+					player.prepare();
+					player.seekTo(0);
+				} catch (IOException e) {
+					Log.e(TAG, e.getMessage());
+				}
+				dialogReproducir.dismiss();				
+			}
+		});
+		int modDuracion = player.getDuration() % 1000;
+		Log.i(TAG, "mod: " + modDuracion);
+		int duracion = player.getDuration() / 1000;
+		if (modDuracion != 0) {
+			duracion++;
+		}
+		Log.i(TAG, "duracion: " + duracion);
+		count = new CountDownTimer((duracion+1) * 1000, 1000) {
+
+		     public void onTick(long millisUntilFinished) {		    	 
+		    	 int milliseconds = player.getDuration() - player.getCurrentPosition();
+		    	 Log.i(TAG, "seg-> " + milliseconds);
+		    	 int minutes = (int)(milliseconds % (1000*60*60)) / (1000*60);
+		    	 int seconds = (int) ((milliseconds % (1000*60*60)) % (1000*60) / 1000);
+		    	 String minutesString = (minutes < 10 ? "0"+minutes : String.valueOf(minutes));
+		    	 String secondsString = (seconds < 10 ? "0"+seconds : String.valueOf(seconds));		    	 
+		    	 txtCount.setText(minutesString + ":" + secondsString);
+		     }
+		     
+		     public void onFinish() {
+		    	 Log.i(TAG, "onFinish");
+		     }
+		  }.start();
+		  dialogReproducir.show();
 		player.start();
 
-		final int duracion = player.getDuration() / 1000;
-		progressBar.setProgress(0);
-		progressBar.setMax(duracion);
-
-		new Thread(new Runnable() {
-			public void run() {
-				while (mProgressStatus < duracion) {
-					mProgressStatus = player.getCurrentPosition() / 1000;
-
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-
-					// Update the progress bar
-					mHandler.post(new Runnable() {
-						public void run() {
-							progressBar.setProgress(mProgressStatus);
-						}
-					});
-				}
-			}
-		}).start();
-
+		
 	}
 	
 	public void borrar(View v) {
@@ -416,7 +435,8 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	@Override
 	public void onCompletion(MediaPlayer player) {
 		Log.i(TAG, "Completado");
-		progressBar.setProgress(0);
+		count.cancel();
+		dialogReproducir.dismiss();
 
 	}
 	

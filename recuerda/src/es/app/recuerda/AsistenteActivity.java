@@ -1,18 +1,12 @@
 package es.app.recuerda;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-
-import es.app.recuerda.util.Util;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import es.app.recuerda.util.Util;
 
 public class AsistenteActivity extends Activity {
 	
