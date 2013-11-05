@@ -117,12 +117,12 @@
                 android:background="@android:color/transparent"
                 android:visibility="visible"/>             
 
-            <ProgressBar
+            <!-- <ProgressBar
                 android:id="@+id/pbAudio"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="200dp" />
+                android:minWidth="200dp" /> -->
             
             <ImageButton
                 android:id="@+id/imgbtnDelete"
