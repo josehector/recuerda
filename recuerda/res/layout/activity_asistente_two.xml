@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="invisible" >
+            android:visibility="visible" >
 
             <ImageButton
                 android:id="@+id/imgbtnPlay"
@@ -116,13 +116,6 @@
                 android:src="@drawable/btn_play_icon" 
                 android:background="@android:color/transparent"
                 android:visibility="visible"/>             
-
-            <!-- <ProgressBar
-                android:id="@+id/pbAudio"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="200dp" /> -->
             
             <ImageButton
                 android:id="@+id/imgbtnDelete"
