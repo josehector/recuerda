@@ -8,12 +8,6 @@ import es.app.recuerda.entidades.Recuerdo;
 
 public class Partida {
 	public static final int NUM_OPCIONES = 4;
-	
-	private static final int TRAMO0 = 0;
-	private static final int TRAMO1 = 3;
-	private static final int TRAMO2 = 5;
-	private static final int TRAMO3 = 9;
-	private static final int TRAMO4 = 15;
 
 	private boolean nuevoJuego;
 	private int numPartida;

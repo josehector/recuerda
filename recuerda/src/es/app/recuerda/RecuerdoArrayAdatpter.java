@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.entidades.WraperRecuerdo;
 
 public class RecuerdoArrayAdatpter extends ArrayAdapter<Recuerdo> {
 	

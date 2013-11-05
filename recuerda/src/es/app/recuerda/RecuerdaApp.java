@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import es.app.recuerda.entidades.Recuerdo;
-import es.app.recuerda.entidades.WraperRecuerdo;
-import es.app.recuerda.util.Util;
-
 import android.app.Application;
+import es.app.recuerda.entidades.Recuerdo;
+import es.app.recuerda.util.Util;
 
 public class RecuerdaApp extends Application {
 	private static final int NUM_FRASES = 6;
