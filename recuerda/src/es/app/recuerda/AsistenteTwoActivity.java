@@ -428,7 +428,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	}
 	
 	private void ocultarPanelAudio(boolean valor) {
-		LinearLayout llPlayAudio = (LinearLayout) findViewById(R.id.llAsPlayAudio);
+		LinearLayout llPlayAudio = (LinearLayout) findViewById(R.id.llAsAudio3);
 		llPlayAudio.setVisibility((valor ? LinearLayout.INVISIBLE : LinearLayout.VISIBLE));
 	}
 
