@@ -4,58 +4,39 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:background="@drawable/bddialog_correcto_sel"
     android:clickable="true"
     android:orientation="vertical" 
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp">
 	    
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical" >
         
-		        <ImageView 
-		    	    android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:adjustViewBounds="true"
-		            android:contentDescription="@string/descrip_img_recuerdo"
-		            android:scaleType="centerInside"
-		    	    android:id="@+id/fineRespond"
-		    	    android:src="@drawable/fine"/>
-		        
-		        <LinearLayout
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center"
-		            android:layout_marginBottom="5dp"
-		            android:layout_marginLeft="5dp"
-		            android:layout_marginRight="5dp"
-		            android:layout_marginTop="40dp"
-		            android:layout_centerInParent="true"
-		            android:orientation="vertical" >
-		        
-				    <TextView
-				        android:id="@+id/tvDialogCorrecto"
-				        android:layout_width="fill_parent"
-				        android:layout_height="wrap_content"	        
-				        android:layout_gravity="center_vertical"
-				        android:gravity="center"        
-				        android:text="@string/frase1"
-				        style="@style/frasesDialog"	        
-				        android:layout_marginBottom="5dp"/>
-				    
-				    <TextView
-				        android:id="@+id/tvDialogCorrecto2"
-				        android:layout_width="fill_parent"
-				        android:layout_height="wrap_content"	        
-				        android:layout_gravity="right"	        
-				        android:text="@string/autor_frase1"
-				        style="@style/autorFrasesDialog"/>
-			  </LinearLayout>
-	    </RelativeLayout>
+	    <TextView
+	        android:id="@+id/tvDialogCorrecto"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	        
+	        android:layout_gravity="center_vertical"	
+	        android:gravity="center"        
+	        android:text="@string/frase1"
+	        style="@style/frasesDialog"	        
+	        android:layout_marginBottom="5dp"/>
+	    
+	    <TextView
+	        android:id="@+id/tvDialogCorrecto2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	        
+	        android:layout_gravity="right"	        
+	        android:text="@string/autor_frase1"
+	        style="@style/autorFrasesDialog"/>
+	    </LinearLayout>
     
 </LinearLayout>
