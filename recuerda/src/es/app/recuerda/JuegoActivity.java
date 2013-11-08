@@ -8,7 +8,9 @@ import java.util.List;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,7 @@ import es.app.recuerda.db.ServicioRecuerdo;
 import es.app.recuerda.entidades.Recuerdo;
 import es.app.recuerda.util.Util;
 
-public class JuegoActivity extends Activity{
+public class JuegoActivity extends FragmentActivity{
 	private static final String TAG = JuegoActivity.class.getName();
 	public static final int NO_RECUERDOS = 2;
 		
@@ -36,8 +38,7 @@ public class JuegoActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.juego);
 		recuerdaApp = (RecuerdaApp) getApplication();
-		partida = recuerdaApp.getPartida();
-		getActionBar().setDisplayHomeAsUpEnabled(true);				
+		partida = recuerdaApp.getPartida();		
 				
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
@@ -76,7 +77,11 @@ public class JuegoActivity extends Activity{
 				finish();
 			}
 		}
-        getActionBar().setTitle("Seleccione la imagen de " + partida.getPregunta().getNombre());
+        if (Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1){
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setTitle("Seleccione la imagen de " + partida.getPregunta().getNombre());
+		}
+        
 		//En el Map opciones estan las posibles respuestas de recuerdos
         recuerdoBuscar.setText(partida.getPregunta().getNombre());
     	for(int idImg : partida.getOpciones().keySet()) {
@@ -102,12 +107,14 @@ public class JuegoActivity extends Activity{
 						partida.incrementarPartida();
 						partida.acierto();
 						DialogCorrecto correcto = DialogCorrecto.newInstance(recuerdaApp.getFrase());						
-						correcto.show(getFragmentManager(), "tagCorrecto");
+						//correcto.show(getFragmentManager(), "tagCorrecto");
+						correcto.show(getSupportFragmentManager(), "tagCorrecto");
 					} else {
 						Log.d(TAG, "Fallo");
 						partida.fallo();
 						DialogFallo fallo = DialogFallo.newInstance(recuerdaApp.getFraseError());
-						fallo.show(getFragmentManager(), "tagFallo");
+						//fallo.show(getFragmentManager(), "tagFallo");
+						fallo.show(getSupportFragmentManager(), "tagFallo");
 					}						
 				}
 			});
@@ -131,7 +138,7 @@ public class JuegoActivity extends Activity{
 			fileImg = new FileInputStream(imgPath);
 			mBitmap = BitmapFactory.decodeStream(fileImg, null, options);
 			Log.i(TAG, "Longitud imagen reconstruida: " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
-			Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());	
+			//Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());	
 			imgButton.setImageBitmap(mBitmap);
 		} catch (FileNotFoundException e) {
 			Log.e(TAG, "Error al mostrar imagenes");			

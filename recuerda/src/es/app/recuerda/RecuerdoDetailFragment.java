@@ -106,7 +106,7 @@ public class RecuerdoDetailFragment extends Fragment implements OnCompletionList
 						fileImg = new FileInputStream(mItem.getPathImg());
 						mBitmap = BitmapFactory.decodeStream(fileImg, null, options);
 						Log.i(TAG, "Longitud imagen reconstruida: " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
-						Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());										        
+						//Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());										        
 						imgView.setImageBitmap(mBitmap);
 						Animation animacionFadeIn = AnimationUtils.loadAnimation(getActivity(),R.anim.transparencia);
 						imgView.startAnimation(animacionFadeIn);							

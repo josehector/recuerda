@@ -132,7 +132,12 @@ public class RecuerdoListActivity extends FragmentActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			this.recreate();
+			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+				this.recreate();
+			} else {
+				startActivity(getIntent());
+	            finish();
+			}
 		} else if (resultCode == JuegoActivity.NO_RECUERDOS) {
 			Log.i(TAG, "No se ha podido jugar por falta de recuerdos");
 		}
