@@ -70,8 +70,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_asistente_two);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		setContentView(R.layout.activity_asistente_two);		
 		
 		context = this;
 		fragmentManager = getSupportFragmentManager();
@@ -81,6 +80,9 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		Bundle extras = getIntent().getExtras();
 		nombreSelected = extras.getString("NOMBRE_SELECTED");
 		imagenSelected = extras.getParcelable("IMG_SELECTED");
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle(nombreSelected);
 
 		guardando = new ProgressDialog(this);
 		guardando.setMessage(getResources().getString(R.string.msg_dialgo_guardar));
