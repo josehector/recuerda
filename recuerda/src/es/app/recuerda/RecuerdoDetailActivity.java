@@ -1,6 +1,7 @@
 package es.app.recuerda;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -28,7 +29,9 @@ public class RecuerdoDetailActivity extends FragmentActivity {
 		setContentView(R.layout.activity_recuerdo_detail);
 
 		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if (Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1){
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}		
 
 		// savedInstanceState is non-null when there is fragment state
 		// saved from previous configurations of this activity

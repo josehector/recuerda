@@ -1,15 +1,17 @@
 package es.app.recuerda;
 
+//import android.app.Dialog;
+//import android.app.DialogFragment;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DialogFallo extends DialogFragment {
-	private static final String TAG = DialogCorrecto.class.getName();
+	//private static final String TAG = DialogCorrecto.class.getName();
 
 	public static DialogFallo newInstance(int[] msg) {
 		DialogFallo frag = new DialogFallo();

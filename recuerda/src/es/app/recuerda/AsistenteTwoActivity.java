@@ -19,6 +19,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -80,9 +81,10 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		Bundle extras = getIntent().getExtras();
 		nombreSelected = extras.getString("NOMBRE_SELECTED");
 		imagenSelected = extras.getParcelable("IMG_SELECTED");
-		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setTitle(nombreSelected);
+		if (Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1){
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setTitle(nombreSelected);
+		}
 
 		guardando = new ProgressDialog(this);
 		guardando.setMessage(getResources().getString(R.string.msg_dialgo_guardar));
@@ -195,9 +197,9 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 			Log.i(TAG,
 					"Longitud imagen reconstruida: " + bmpSelected.getWidth()
 							+ "x" + bmpSelected.getHeight());
-			Log.i(TAG,
+			/*Log.i(TAG,
 					"Tamaño imagen reconstruida:" + bmpSelected.getByteCount());
-
+*/
 			image.setImageBitmap(bmpSelected);
 		} catch (FileNotFoundException e) {
 			Log.e(TAG, "Error al carga la imagen");

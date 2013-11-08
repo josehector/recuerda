@@ -3,11 +3,13 @@ package es.app.recuerda;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,13 +29,15 @@ public class AsistenteActivity extends Activity {
 	private EditText etNombre;
 	private String nombreRecuerdo;
 	private Uri imagenRecuerdo;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_asistente);
 		Log.i(TAG, "Iniciamos el asistente");
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if (Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.GINGERBREAD_MR1){
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 		nombreRecuerdo = "";
 		etNombre = (EditText) findViewById(R.id.etAsNombre);
 		etNombre.setText("");
@@ -85,7 +89,7 @@ public class AsistenteActivity extends Activity {
 			        imageStream = getContentResolver().openInputStream(imagenRecuerdo);
 			        mBitmap = BitmapFactory.decodeStream(imageStream, null, options);
 			        Log.i(TAG, "Longitud imagen reconstruida: " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
-					Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());							
+					//Log.i(TAG, "Tamaño imagen reconstruida:" + mBitmap.getByteCount());							
 			        imgBtnRecuerdo.setImageBitmap(mBitmap);
 			
 				} catch (FileNotFoundException e) {
