@@ -18,8 +18,18 @@
     </style>
     
     <style name="ItemMenu" parent="AppBaseTheme">
-        <item name="android:textColor">#eeecce</item>
-        <item name="android:shadowColor">#000000</item>
+        <item name="android:textColor">#000000</item>
+
+        
+        <item name="android:textSize">30sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    
+    <style name="TextDetailName" parent="AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:shadowColor">#eeecce</item>
         <item name="android:shadowDx">4</item>
     	<item name="android:shadowDy">4</item>
     	<item name="android:shadowRadius">4</item>
@@ -29,13 +39,13 @@
         <item name="android:typeface">sans</item>
     </style>
     
-    <style name="TextDetail" parent="AppBaseTheme">
-        <item name="android:textColor">#000000</item>
-        <item name="android:shadowColor">#eeecce</item>
+    <style name="TextDetailRelation" parent="AppBaseTheme">
+        <item name="android:textColor">#7F7A7A</item>
+        <item name="android:shadowColor">#000000</item>
         <item name="android:shadowDx">4</item>
     	<item name="android:shadowDy">4</item>
     	<item name="android:shadowRadius">4</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:typeface">sans</item>
