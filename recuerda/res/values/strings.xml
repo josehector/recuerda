@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">recuerda</string>
+    <string name="app_name">Recuerda</string>
     <string name="title_recuerdo_detail">Recuerdo Detail</string>
     <string name="title_activity_asistente">Nuevo recuerdo</string>
     <string name="action_siguiente">Siguiente</string>
@@ -27,6 +27,8 @@
     <string name="lbl_btnAceptar">Aceptar</string>
     <string name="tit_dialogError">Error</string>
     <string name="tit_dialogInfo">Información</string>
+    <string name="tit_dialogCorrecto">Correcto</string>
+    <string name="tit_dialogIncorrecto">Incorrecto</string>
     <string name="lbl_btnSi">Si</string>
     <string name="lbl_btnNo">No</string>
     
