@@ -27,6 +27,7 @@ public class DialogCorrecto extends DialogFragment {
 		Dialog dialogCorrecto = new Dialog(getActivity(), android.R.style.Theme_Translucent);
 		dialogCorrecto.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialogCorrecto.setContentView(R.layout.dialog_correcto);
+		final TextView tvTit = (TextView) dialogCorrecto.findViewById(R.id.tvDialogTitCorrecto);
 		final TextView txtView = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto);
 		txtView.setText(msg[0]);
 		final TextView txtView2 = (TextView) dialogCorrecto.findViewById(R.id.tvDialogCorrecto2);
@@ -37,6 +38,7 @@ public class DialogCorrecto extends DialogFragment {
 			@Override
 			public void onClick(View v) {
 				txtView2.setText("");
+				tvTit.setText("");
 				txtView.setText(R.string.msg_cargando_juego);
 				getActivity().finish();
 				getActivity().startActivity(getActivity().getIntent());				

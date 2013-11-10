@@ -1,7 +1,11 @@
 package es.app.recuerda;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import es.app.recuerda.db.ServicioRecuerdo;
+import es.app.recuerda.entidades.Recuerdo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +16,10 @@ import android.view.Window;
 public class SplashActivity extends Activity {
 
 	// Set the duration of the splash screen
-    private static final long SPLASH_SCREEN_DELAY = 3000;
+    private static final long SPLASH_SCREEN_DELAY = 5000;
+    
+    private ServicioRecuerdo servicio;
+    private RecuerdaApp recuerdaApp;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +31,17 @@ public class SplashActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
  
         setContentView(R.layout.splash); 
+        
+        recuerdaApp = ((RecuerdaApp) getApplicationContext());
+        servicio = new ServicioRecuerdo(this);
+        
  
         TimerTask task = new TimerTask() {
             @Override
-            public void run() {
- 
+            public void run() {            	
+                List<Recuerdo> listaRecuerdos = servicio.getListaRecuerdos();
+                recuerdaApp.setRecuerdos(listaRecuerdos);
+                servicio.cerrar();
                 // Start the next activity
                 Intent mainIntent = new Intent().setClass(
                         SplashActivity.this, RecuerdoListActivity.class);

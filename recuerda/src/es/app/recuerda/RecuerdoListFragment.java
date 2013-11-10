@@ -50,6 +50,7 @@ public class RecuerdoListFragment extends ListFragment {
         RecuerdaApp recuerdaApp = (RecuerdaApp) getActivity().getApplication();
         listaRecuerdos = recuerdaApp.getRecuerdos();
         if (listaRecuerdos == null) {
+        	Log.i(TAG, "No existen recuerdos precargados en el contexto");
         	servicio = new ServicioRecuerdo(this.getActivity());
             listaRecuerdos = servicio.getListaRecuerdos();
             ((RecuerdaApp)getActivity().getApplicationContext()).setRecuerdos(listaRecuerdos);
