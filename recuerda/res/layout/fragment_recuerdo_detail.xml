@@ -16,9 +16,11 @@
         android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    
+    
     <ImageView
         android:id="@+id/imagen_recuerdo"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:contentDescription="Descripción del contenido de la imagen"
