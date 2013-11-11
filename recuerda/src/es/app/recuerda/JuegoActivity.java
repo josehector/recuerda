@@ -43,7 +43,7 @@ public class JuegoActivity extends FragmentActivity{
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
         if (partida.isNuevoJuego()) {
-        	listaRecuerdos = recuerdaApp.getRecuerdos();
+        	//listaRecuerdos = recuerdaApp.getRecuerdos();
 			if (listaRecuerdos == null) {
 				ServicioRecuerdo servicio = new ServicioRecuerdo(this);
 				listaRecuerdos = servicio.getListaRecuerdos();
