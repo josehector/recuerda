@@ -31,7 +31,8 @@
     <string name="tit_dialogIncorrecto">Incorrecto</string>
     <string name="lbl_btnSi">Si</string>
     <string name="lbl_btnNo">No</string>
-    <string name="tit_addRelacion">Añadir Relación</string>
+    <string name="txt_nueva">Nueva</string>
+    <string name="txt_relacion">Relacion</string>
     
     <string name="msg_img_obligatorio">Debe seleccionar una imagen</string>
     <string name="msg_nombre_obligatorio">Debe escribir un nombre</string>

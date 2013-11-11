@@ -3,15 +3,44 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#f49842">
+    android:background="#f49842"
+    android:layout_gravity="center_horizontal">
     <!-- android:src="@drawable/header_logo" -->
-    <ImageView 
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:scaleType="center"
-        android:background="#f49842"
-        android:src="@drawable/relation"
-        android:contentDescription="@string/app_name"/>
+	<LinearLayout 
+	    android:orientation="horizontal"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_gravity="center_horizontal"
+    >
+
+    	<TextView
+    	    android:id="@+id/recuerdo_nombre"
+    	    android:paddingTop="25dp"
+    	    android:textColor="#FFFFFF"
+    	    android:textStyle="bold"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:gravity="center"
+    	    android:text="@string/txt_nueva" />
+
+	    	<ImageView 
+        		android:layout_width="match_parent"
+        		android:layout_height="64dp"
+        		android:scaleType="center"
+        		android:background="#f49842"
+        		android:src="@drawable/relation"
+        		android:contentDescription="@string/app_name"/>
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:paddingTop="25dp"
+	        android:textColor="#FFFFFF"
+	        android:textStyle="bold"
+	        android:layout_height="wrap_content"
+	        android:text="@string/txt_relacion" />
+
+	</LinearLayout>    
+    
     <EditText
         android:id="@+id/etNewRelacion"        
         android:layout_width="match_parent"
