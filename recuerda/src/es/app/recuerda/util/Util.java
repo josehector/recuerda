@@ -6,7 +6,7 @@ import android.util.Log;
 
 /**
  * Clases de utilidad
- * @author josehector
+ * @author joseangel
  *
  */
 public class Util {
