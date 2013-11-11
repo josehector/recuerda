@@ -43,8 +43,8 @@ public class JuegoActivity extends FragmentActivity{
 		recuerdoBuscar = (TextView) findViewById(R.id.recuerdoBuscar);
 				
         if (partida.isNuevoJuego()) {
+        	listaRecuerdos = recuerdaApp.getRecuerdos();
 			if (listaRecuerdos == null) {
-				//Se podría obtener la lista del contexto ya que antes de llegar aquí se carga la lista de recuerdos
 				ServicioRecuerdo servicio = new ServicioRecuerdo(this);
 				listaRecuerdos = servicio.getListaRecuerdos();
 				servicio.cerrar();
