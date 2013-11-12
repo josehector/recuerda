@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".AsistenteTwoActivity" 
+    android:orientation="horizontal" 
+    android:weightSum="2">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/llAsRel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvSelRel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_selec_relacion"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/btnNuevaRelacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/descrip_add_relacion"
+                    android:src="@drawable/add_relacion" />
+
+                <Spinner
+                    android:id="@+id/spnRelacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAsAudio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/llAsAudio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/llAsAudio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tvSelAudio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_selec_audio"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <ImageButton
+                        android:id="@+id/imgBtnGrabParar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:onClick="grabarParar"
+                        android:src="@drawable/microphone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAsAudio3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:visibility="invisible" >
+
+                    <LinearLayout
+                        android:id="@+id/llAsPlayAudio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:orientation="horizontal" >
+
+                        <ImageButton
+                            android:id="@+id/imgbtnPlay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@string/descrip_img_play"
+                            android:onClick="reproducir"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_play_icon" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAsBorrarAudio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageButton
+                            android:id="@+id/imgbtnDelete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@string/descrip_img_del"
+                            android:onClick="borrar"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_del_icon" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- SECCION AUDIO  -->
+
+    <LinearLayout
+        android:id="@+id/llAsImg"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"     
+        android:layout_weight="1"        
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/ivResImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/descrip_img_recuerdo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/recuerdo_img" />
+
+    </LinearLayout>
+
+    
+
+</LinearLayout>
