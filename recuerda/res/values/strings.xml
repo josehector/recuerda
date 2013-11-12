@@ -16,6 +16,7 @@
     <string name="txt_nom_relacion">Relacion</string>
     <string name="txt_duracion">00:00</string>
     <string name="lbl_nueva_relacion_nombre">Nombre</string>
+    <string name="descrip_img_recuerdo">Imagen del recuerdo</string>
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_img_del">Borrar audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
