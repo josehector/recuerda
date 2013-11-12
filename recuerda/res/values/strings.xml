@@ -7,8 +7,7 @@
     <string name="action_siguiente">Siguiente</string>
     <string name="action_hecho">Hecho</string>    
     <string name="action_add">Añadir</string>
-    <string name="action_game">Jugar</string>
-    <string name="descrip_img_recuerdo">Boton para cargar la imagen del recuerdo</string>
+    <string name="action_game">Jugar</string>    
     <string name="txt_cargar_img">Por favor proporcione la imagen para el recuerdo.</string>
     <string name="txt_selec_relacion">Por favor seleccione la relación</string>
     <string name="txt_selec_audio">Grabar audio</string>
@@ -16,7 +15,7 @@
     <string name="txt_nom_relacion">Relacion</string>
     <string name="txt_duracion">00:00</string>
     <string name="lbl_nueva_relacion_nombre">Nombre</string>
-    <string name="descrip_img_recuerdo">Imagen del recuerdo</string>
+    <string name="descrip_img_recuerdo">Boton para cargar la imagen del recuerdo</string>    
     <string name="descrip_img_play">Reproducir audio</string>
     <string name="descrip_img_del">Borrar audio</string>
     <string name="descrip_add_relacion">Añadir nueva relación</string>
