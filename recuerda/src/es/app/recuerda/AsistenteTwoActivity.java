@@ -165,6 +165,16 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		spnRelacion.setAdapter(adapter);
+		
+		if (savedInstanceState != null) {
+			String path = savedInstanceState.getString("audio");
+			if (path != null) {
+				archivo = new File(path);
+				this.ocultarPanelAudio(false);
+				prepararPlayer(archivo);
+			}
+		}
+		
 	}
 
 	@Override
@@ -294,7 +304,7 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 				.getPath());
 		try {
 			archivo = File.createTempFile("temporal", ".3gp", path);
-			archivo.deleteOnExit();
+			//archivo.deleteOnExit();
 			Log.i(TAG, archivo.getPath());
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());
@@ -315,7 +325,8 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		Log.i(TAG, "Paramos la grabación");
 		recorder.stop();
 		recorder.release();
-		player = new MediaPlayer();
+		prepararPlayer(archivo);
+		/*player = new MediaPlayer();
 		player.setOnCompletionListener(this);
 		try {
 			player.setDataSource(archivo.getAbsolutePath());
@@ -326,14 +337,26 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 			player.prepare();
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());
-		}
-		/*ImageButton btnGrabarParar = (ImageButton) v;
-		btnGrabarParar.setImageDrawable(getResources().getDrawable(
-				R.drawable.microphone));*/
+		}*/		
 		if (archivo != null) {
 			ocultarPanelAudio(false);			
 		}
 		grabar = true;
+	}
+	
+	private void prepararPlayer(File archivoAudio) {
+		player = new MediaPlayer();
+		player.setOnCompletionListener(this);
+		try {
+			player.setDataSource(archivoAudio.getAbsolutePath());
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
+		try {
+			player.prepare();
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
 	}
 
 	public void grabarParar(final View v) {
@@ -458,10 +481,23 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 	protected void onDestroy() {
 		Log.i(TAG, "OnDestroy");
 		super.onDestroy();
-		if (archivo != null) {
-			archivo.delete();
-		}		
-		servicio.cerrar();
+		if (isFinishing()) {			
+			if (archivo != null) {
+				Log.i(TAG, "Borramos fichero audio");
+				archivo.delete();
+			}
+			servicio.cerrar();
+		}
 	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (archivo != null) {
+			outState.putString("audio", archivo.getAbsolutePath());
+		}
+	}
+	
+	
 
 }
