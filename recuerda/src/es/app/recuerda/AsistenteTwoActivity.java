@@ -278,6 +278,8 @@ public class AsistenteTwoActivity extends FragmentActivity implements
 		protected void onPostExecute(Recuerdo result) {
 			guardando.dismiss();
 			if (result != null) {
+				Log.d(TAG, "La lista de recuerdos es nula?...." 
+						+ (((RecuerdaApp) getApplication()).getRecuerdos() == null ? "SI" : "NO"));
 				((RecuerdaApp) getApplication()).getRecuerdos().add(result);
 				setResult(RESULT_OK);
 				Toast.makeText(context,

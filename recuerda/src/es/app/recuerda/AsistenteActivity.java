@@ -29,6 +29,8 @@ public class AsistenteActivity extends Activity {
 	private EditText etNombre;
 	private String nombreRecuerdo;
 	private Uri imagenRecuerdo;
+	private int widthBtn;
+	private int heightBtn;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class AsistenteActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
+				widthBtn = imgBtnRecuerdo.getWidth();
+				heightBtn = imgBtnRecuerdo.getHeight();
 				Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);				
@@ -82,7 +86,7 @@ public class AsistenteActivity extends Activity {
 					
 			 
 			        options.inSampleSize = Util.calculateInSampleSize(options.outWidth, options.outHeight,
-			        		 imgBtnRecuerdo.getWidth(), imgBtnRecuerdo.getHeight());
+			        		 widthBtn, heightBtn);
 			        Log.i(TAG, "inSampleSize: " + options.inSampleSize);
 			 
 			        options.inJustDecodeBounds = false;

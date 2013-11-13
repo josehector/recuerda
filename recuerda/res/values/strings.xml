@@ -116,6 +116,8 @@
         <item>Hija</item>
         <item>Nieto</item>
         <item>Nieta</item>
+        <item>Hermano</item>
+        <item>Hermana</item>
     </string-array>
 
 </resources>
