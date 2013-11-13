@@ -8,7 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AsistenteTwoActivity" 
     android:orientation="vertical" 
-    android:weightSum="4">
+    android:weightSum="4"
+    android:background="@color/blanco">
 
     <LinearLayout
         android:id="@+id/llAsImg"
@@ -41,7 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"              
         android:text="@string/txt_selec_relacion"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:textColor="@color/black"/>
         
         <LinearLayout
             android:layout_width="fill_parent"
@@ -93,7 +95,8 @@
 				       android:layout_width="wrap_content"
 				       android:layout_height="wrap_content"              
 				       android:text="@string/txt_selec_audio"
-				       android:textAppearance="?android:attr/textAppearanceLarge" />
+				       android:textAppearance="?android:attr/textAppearanceLarge" 
+				       android:textColor="@color/black"/>
 		        <ImageButton
 			                android:id="@+id/imgBtnGrabParar"
 			                android:layout_width="wrap_content"

@@ -2,4 +2,5 @@
 <resources>   
     <color name="black">#000000</color>
     <color name="titletextcolor">#FFFF00</color>
+    <color name="blanco">#FFFFFF</color>
 </resources>
