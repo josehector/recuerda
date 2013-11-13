@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
   	android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/blanco" >
 
 <RelativeLayout
     android:layout_width="fill_parent"
@@ -11,7 +12,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AsistenteActivity" >
+    tools:context=".AsistenteActivity">
 
     <LinearLayout
         android:id="@+id/llAsImg"
@@ -27,7 +28,8 @@
         android:layout_height="wrap_content"    
         android:layout_gravity="center"          
         android:text="@string/txt_cargar_img"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:textColor="@color/black"/>
 
         <ImageButton
             android:id="@+id/imgAsRecuerdo"
@@ -36,7 +38,7 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:contentDescription="@string/descrip_img_recuerdo"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/recuerdo_img" />
 
         <EditText
