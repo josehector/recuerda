@@ -1,0 +1,70 @@
+# Introduction #
+
+Add your content here.
+
+
+# Details #
+
+Add your content here.  Format your content with:
+  * Text in **bold** or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+# Paginas de interes #
+**Fragments**
+
+http://jarroba.com/fragments-fragmentos-en-android/
+
+http://jarroba.com/programar-fragments-fragmentos-en-android/
+
+http://javiexpo.wordpress.com/2013/06/07/expo-tutorial-como-usar-fragments-en-android/
+
+**ListViews**
+
+http://jarroba.com/listview-o-listado-en-android/
+
+https://groups.google.com/forum/#!topic/desarrolladores-android/rmrHzicimvw
+
+http://www.edumobile.org/android/android-development/image-gallery-example-in-android/
+
+**Audio Recorder**
+
+http://www.javaya.com.ar/androidya/detalleconcepto.php?codigo=158&inicio=20
+
+**Imagen**
+
+http://javatechig.com/android/writing-image-picker-using-intent-in-android/
+
+http://www.tutorialandroid.com/basico/como-cambiar-de-tamano-una-imagen-bitmap/
+
+http://www.maestrosdelweb.com/editorial/curso-android-trabajando-con-imagenes/
+
+http://danielme.com/tip-android-26-galeria-de-imagenes-con-el-widget-gridview/
+
+**Cargar ficheros desde SD**
+
+http://www.sgoliver.net/blog/?p=2035
+
+http://androideity.com/2011/11/03/escribiendo-archivos-en-la-memoria-externa-sd-card/
+
+**SQLite**
+
+http://androcode.es/2012/12/primeros-pasos-con-ormlite/
+
+http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite.html#Top
+
+**ActionBar**
+
+http://www.sgoliver.net/blog/?p=3620
+
+**Parceable**
+
+http://androcode.es/2012/12/trabajando-con-parcelables/
+
+**Dialog**
+
+http://developer.android.com/guide/topics/ui/dialogs.html
+
+**Spinner**
+
+http://danielme.com/2013/04/25/diseno-android-spinner/
